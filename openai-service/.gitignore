@@ -1,0 +1,33 @@
+# Dependencies
+/node_modules
+
+# Build outputs
+/dist
+/build
+
+# Editor preferences
+/.vscode/
+/.idea/
+
+# Test coverage reports
+/coverage/
+
+# Temporary files
+.tmp/
+
+# Logs
+*.log
+
+# Environment variables
+/env
+
+# Additional extensions
+*.pem
+*.crt
+*.jks
+*.key
+
+# Specific files based on needs
+# Add any other files or folders you want to exclude here
+example.txt
+another_file.js

@@ -26,8 +26,6 @@ async function getRecipe(ingredients, method) {
     model: "gpt-3.5-turbo",
   });
 
-  // console.log(completion.choices[0].message);
-
   return completion.choices[0].message.content;
 }
 
@@ -35,7 +33,6 @@ app.post("/get-recipe", async (req, res) => {
   try {
     const { ingredients, method } = req.body;
     const recipe = await getRecipe(ingredients, method);
-    console.log(recipe);
     res.send(recipe);
   } catch (error) {
     console.error(error);

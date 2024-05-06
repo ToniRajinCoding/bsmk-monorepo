@@ -28,13 +28,8 @@ class SearchActivity : AppCompatActivity() {
 
         binding.btnSubmit.setOnClickListener {
             askRecipe(ingredients, method)
-//            { recipe ->
-//                binding.tvResult.text = recipe
-//            }
         }
     }
-
- //callback: (String) -> Unit
 
     private fun askRecipe(ingredients:String, method:String){
         val gson = Gson()
@@ -56,10 +51,11 @@ class SearchActivity : AppCompatActivity() {
                     }
                 }else{
                     val errorBody = response.errorBody()?.string()
+                    Log.e("error", "API Error: $errorBody")
                 }
             }
             override fun onFailure(call: Call<RecipeResponse>, throwable: Throwable) {
-                Log.d("error", "error because" + throwable.message)
+                Log.e("error", "error because" + throwable.message)
             }
 
         })

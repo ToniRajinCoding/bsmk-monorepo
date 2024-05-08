@@ -1,9 +1,9 @@
 package com.example.besokmasak.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.besokmasak.api.ApiService
 import com.example.besokmasak.api.RetrofitClient
 import com.example.besokmasak.databinding.ActivitySearchBinding
 import com.example.besokmasak.model.request.RecipeRequest
@@ -40,22 +40,21 @@ class SearchActivity : AppCompatActivity() {
         )
 
         val call = apiService.createQuery(requestBody)
+        val intent = Intent(this, RecipeResultActivity::class.java)
         call.enqueue(object : Callback<RecipeResponse>{
             override fun onResponse(call: Call<RecipeResponse>, response: Response<RecipeResponse>) {
                 if(response.isSuccessful){
-                    Log.d("tag", response.body().toString())
-                    val jsonResponse = gson.toJson(response.body())
-                    Log.d("debug gson result", jsonResponse.toString())
-                    runOnUiThread{
-                        binding.tvResult.text = jsonResponse
-                    }
+                    val jsonResponse = gson.toJson(response.body(), RecipeResponse::class.java)
+                    //intent.putExtra("recipeResponse", jsonResponse)
+                    Log.d("hasil jsong: ", jsonResponse)
+                //startActivity(intent)
                 }else{
                     val errorBody = response.errorBody()?.string()
                     Log.e("error", "API Error: $errorBody")
                 }
             }
             override fun onFailure(call: Call<RecipeResponse>, throwable: Throwable) {
-                Log.e("error", "error because" + throwable.message)
+                Log.e("error", "error because: " + throwable.message)
             }
 
         })

@@ -44,10 +44,11 @@ class SearchActivity : AppCompatActivity() {
         call.enqueue(object : Callback<RecipeResponse>{
             override fun onResponse(call: Call<RecipeResponse>, response: Response<RecipeResponse>) {
                 if(response.isSuccessful){
-                    val jsonResponse = gson.toJson(response.body(), RecipeResponse::class.java)
-                    //intent.putExtra("recipeResponse", jsonResponse)
-                    Log.d("hasil jsong: ", jsonResponse)
-                //startActivity(intent)
+                    //val jsonResponse : RecipeResponse = gson.fromJson(response.body(), RecipeResponse::class.java)
+                    val jsonResponse = response.body()
+                    intent.putExtra("RecipeResponse", jsonResponse)
+                    //Log.d("hasil jsong: ", jsonResponse)
+                    startActivity(intent)
                 }else{
                     val errorBody = response.errorBody()?.string()
                     Log.e("error", "API Error: $errorBody")

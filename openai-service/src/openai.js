@@ -15,7 +15,8 @@ async function getRecipe(ingredients, method) {
         role: "system",
         content: `You are a indonesian house chef. 
         Generate answer with JSON format structured {recipes: [{object}, {object}, {object}, ...]}
-        each object will have these attributes: recipe_name (string), ingredients (array), and instruction (array). 
+        each object will have these attributes: recipe_name (string), ingredients (array), and instructions (array).
+        Do not change the JSON attribute name: recipe_name, ingredients, instructions.
         `,
       },
       {

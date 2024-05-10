@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.besokmasak.R
 import com.example.besokmasak.adapter.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.model.response.RecipeResponse
+import com.google.gson.Gson
 
 class RecipeResultActivity : AppCompatActivity() {
 
@@ -17,14 +17,22 @@ class RecipeResultActivity : AppCompatActivity() {
         binding = ActivityRecipeResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val recipeResponse : RecipeResponse? = intent.getParcelableExtra("RecipeResponse", RecipeResponse::class.java)
-        Log.d("debug", recipeResponse.toString())
-        val listOfRecipe = recipeResponse?.recipes ?: emptyList()
-        Log.d("debug listOfRecipe: ", listOfRecipe.toString())
+        val gson = Gson()
+        val stringResponse = intent.getStringExtra("RecipeResponse")
 
-        val layoutManager = LinearLayoutManager(this)
-        val recipeResultAdapter = RecipeResultAdapter(listOfRecipe, layoutManager)
-        binding.rvRecipeDetail.adapter = recipeResultAdapter
-        binding.rvRecipeDetail.layoutManager = layoutManager
+        if(stringResponse != null){
+            val recipeResponse = gson.fromJson(stringResponse, RecipeResponse::class.java)
+            //Log.d("debug", recipeResponse.toString())
+            val listOfRecipe = recipeResponse?.recipes ?: emptyList()
+            Log.d("debug listOfRecipe: ", listOfRecipe.toString())
+            val layoutManager = LinearLayoutManager(this)
+            val recipeResultAdapter = RecipeResultAdapter(listOfRecipe)
+            binding.rvRecipeDetail.adapter = recipeResultAdapter
+            binding.rvRecipeDetail.layoutManager = layoutManager
+        }else{
+            Log.e("error", "kosong euy")
+
+        }
+
     }
 }

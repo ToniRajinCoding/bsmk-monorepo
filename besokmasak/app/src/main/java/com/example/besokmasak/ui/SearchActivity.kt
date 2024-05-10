@@ -40,14 +40,14 @@ class SearchActivity : AppCompatActivity() {
         )
 
         val call = apiService.createQuery(requestBody)
-        val intent = Intent(this, RecipeResultActivity::class.java)
+
         call.enqueue(object : Callback<RecipeResponse>{
             override fun onResponse(call: Call<RecipeResponse>, response: Response<RecipeResponse>) {
                 if(response.isSuccessful){
-                    //val jsonResponse : RecipeResponse = gson.fromJson(response.body(), RecipeResponse::class.java)
-                    val jsonResponse = response.body()
-                    intent.putExtra("RecipeResponse", jsonResponse)
-                    //Log.d("hasil jsong: ", jsonResponse)
+                    val intent = Intent(applicationContext, RecipeResultActivity::class.java)
+                    val responseString = gson.toJson(response.body())
+                    intent.putExtra("RecipeResponse", responseString)
+                    Log.d("hasil jsong: ", responseString)
                     startActivity(intent)
                 }else{
                     val errorBody = response.errorBody()?.string()

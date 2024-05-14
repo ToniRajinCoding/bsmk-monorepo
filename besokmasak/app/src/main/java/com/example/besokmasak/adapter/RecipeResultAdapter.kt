@@ -6,23 +6,31 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.besokmasak.R
 import com.example.besokmasak.databinding.RecipeDetailBinding
 import com.example.besokmasak.model.response.Recipe
 
 class RecipeResultAdapter(
-    private val recipeList: List<Recipe>
+    private var recipeList: List<Recipe>, private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<RecipeResultAdapter.RecipeResponseViewHolder>() {
     class RecipeResponseViewHolder(val binding: RecipeDetailBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeResponseViewHolder {
-        val binding =
-            RecipeDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecipeResponseViewHolder(binding)
+        val view = layoutInflater.inflate(R.layout.recipe_detail, parent, false)
+        return RecipeResponseViewHolder(RecipeDetailBinding.bind(view))
     }
 
     override fun getItemCount(): Int {
         return recipeList.size
+    }
+
+    fun setRecipeList(recipeList: List<Recipe>){
+        this.recipeList = recipeList
+    }
+
+    fun getRecipeList() : List<Recipe> {
+        return recipeList
     }
 
     override fun onBindViewHolder(holder: RecipeResponseViewHolder, position: Int) {

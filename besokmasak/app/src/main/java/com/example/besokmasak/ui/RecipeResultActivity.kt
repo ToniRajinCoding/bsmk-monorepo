@@ -38,8 +38,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         if (listOfRecipe.isEmpty()){
             Log.e("error", "Failed to parse recipe data")
         }
-        //var listOfRecipe = recipeResponse?.recipes ?: emptyList()
-        //Log.d("debug listOfRecipe: ", listOfRecipe.toString())
+
         return listOfRecipe
     }
 
@@ -51,7 +50,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         initialize()
     }
 
-    fun initialize() {
+    private fun initialize() {
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
@@ -60,7 +59,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         manager.setMaxDegree(20.0f)
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
-        manager.setCanScrollVertical(true)
+        manager.setCanScrollVertical(false)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         binding.csvRecipeDetail.layoutManager = manager
@@ -70,6 +69,11 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                 supportsChangeAnimations = false
             }
         }
+    }
+
+    private fun paginate(){
+        val old = adapter.getRecipeList()
+        val new = adapter.
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {

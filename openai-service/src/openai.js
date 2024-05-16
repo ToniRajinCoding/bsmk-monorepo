@@ -21,7 +21,7 @@ async function getRecipe(ingredients, method) {
       },
       {
         role: "user",
-        content: `Please give me 5 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
+        content: `Please give me 10 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
       },
     ],
     model: "gpt-3.5-turbo",

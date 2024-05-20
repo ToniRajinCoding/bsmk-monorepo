@@ -30,6 +30,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     private fun collectRecipe(): List<Recipe> {
         val gson = Gson()
         val stringResponse = intent.getStringExtra("RecipeResponse")
+        val ingredients = intent.getStringExtra("ingredients")
+        val method = intent.getStringExtra("method")
         val listOfRecipe = stringResponse?.let {
             val recipeResponse = gson.fromJson(it, RecipeResponse::class.java)
             recipeResponse.recipes
@@ -71,9 +73,13 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         }
     }
 
+    private fun generateRecipe(ingredients : String, method : String){
+
+    }
+
     private fun paginate(){
         val old = adapter.getRecipeList()
-        val new = adapter.
+        val new = old.plus(generateRecipe())
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {

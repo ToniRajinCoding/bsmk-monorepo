@@ -1,4 +1,4 @@
-package com.example.besokmasak.api
+package com.example.besokmasak.api.remote
 
 import com.example.besokmasak.model.request.RecipeRequest
 import com.example.besokmasak.model.response.RecipeResponse

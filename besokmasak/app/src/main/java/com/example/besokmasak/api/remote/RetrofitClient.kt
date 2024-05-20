@@ -1,4 +1,4 @@
-package com.example.besokmasak.api
+package com.example.besokmasak.api.remote
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

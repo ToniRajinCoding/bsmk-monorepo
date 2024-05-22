@@ -10,9 +10,11 @@ object RetrofitClient {
 
     private const val BASE_URL = "http://10.0.2.2:3000"
 
-    val okHttpClient = OkHttpClient.Builder().connectTimeout(20,TimeUnit.SECONDS).readTimeout(20,TimeUnit.SECONDS).build()
+    private val okHttpClient: OkHttpClient =
+        OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS).build()
 
-    val apiService : ApiService by lazy {
+    val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

@@ -3,16 +3,19 @@ package com.example.besokmasak.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.RecipeDetailBinding
 import com.example.besokmasak.model.response.Recipe
+import com.example.besokmasak.utils.RecipeDiffCallBack
 
 class RecipeResultAdapter(
-    private var recipeList: List<Recipe>, private val layoutInflater: LayoutInflater
+    private var recipeList: List<Recipe>,
+    private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<RecipeResultAdapter.RecipeResponseViewHolder>() {
+
     class RecipeResponseViewHolder(val binding: RecipeDetailBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -23,6 +26,12 @@ class RecipeResultAdapter(
 
     override fun getItemCount(): Int {
         return recipeList.size
+    }
+
+    fun updateRecipeList(newData: List<Recipe>){
+        val diffCallback = RecipeDiffCallBack(this.recipeList, newData)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun setRecipeList(recipeList: List<Recipe>){

@@ -1,6 +1,7 @@
 package com.example.besokmasak.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,23 +16,31 @@ import retrofit2.Response
 
 class RecipeViewModel : ViewModel() {
 
-    private val _listOfRecipe = MutableLiveData<List<Recipe>>()
+    //private val _listOfRecipe = MutableLiveData<List<Recipe>>()
     //val listOfRecipe : LiveData<List<Recipe>> = _listOfRecipe
 
-    private val _ingredients = MutableLiveData<String>()
-    private val _method = MutableLiveData<String>()
+    private var _listOfRecipe = MutableLiveData<List<Recipe>>()
+    val listOfRecipe : LiveData<List<Recipe>> = _listOfRecipe
 
-    fun setInputs(ingredient:String, method:String){
-        _ingredients.postValue(ingredient)
-        _method.postValue(method)
+    private val _ingredients = MutableLiveData<String>()
+    val ingredients : LiveData<String> = _ingredients
+
+    private val _method = MutableLiveData<String>()
+    val method : LiveData<String> = _method
+
+    fun setInputs(ingredientInput:String, methodInput:String){
+        _ingredients.value = ingredientInput
+        _method.value = methodInput
     }
 
-    fun askRecipe() {
+    fun generateRecipe() {
         val apiService = RetrofitClient.apiService
         val requestBody = RecipeRequest(
-            ingredients = _ingredients.value!!,
-            method = _method.value!!
+            ingredients = ingredients,
+            method = method
         )
+
+        Log.d("isi dari ing & met: ", "$ingredients $method")
 
         val call = apiService.createQuery(requestBody)
 
@@ -41,11 +50,10 @@ class RecipeViewModel : ViewModel() {
                 response: Response<RecipeResponse>
             ){
                 if (response.isSuccessful) {
-                    val listOfRecipe = response.body()?.recipes ?: emptyList()
-                    if (listOfRecipe.isEmpty()) Log.e("error", "Fatal Error! Empty List")
-                    viewModelScope.launch {
-                         _listOfRecipe.postValue(listOfRecipe)
-                    }
+                    val responseRecipeList = response.body()?.recipes ?: emptyList()
+                    Log.d("isi dari response", response.body().toString())
+                    if (responseRecipeList.isEmpty()) Log.e("error", "Fatal Error! Empty List")
+
                 } else {
                     val errorBody = response.errorBody()?.string()
                     Log.e("error", "API Error: $errorBody")

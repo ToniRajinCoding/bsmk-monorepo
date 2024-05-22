@@ -19,7 +19,8 @@ import retrofit2.Response
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
-    private lateinit var viewModel: ViewModel
+
+    private val viewModel by lazy { ViewModelProvider(this).get(RecipeViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +30,10 @@ class SearchActivity : AppCompatActivity() {
 
         val ingredients = binding.etMaterial.text.toString()
         val method = binding.etMasakType.text.toString()
-
-        viewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         val intent = Intent(applicationContext, RecipeResultActivity::class.java)
 
         binding.btnSubmit.setOnClickListener {
-            (viewModel as RecipeViewModel).setInputs(ingredients,method)
+            viewModel.setInputs(ingredients,method)
             startActivity(intent)
         }
     }

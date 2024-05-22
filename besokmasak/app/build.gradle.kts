@@ -55,4 +55,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx")
+    implementation("androidx.activity:activity-ktx")
 }

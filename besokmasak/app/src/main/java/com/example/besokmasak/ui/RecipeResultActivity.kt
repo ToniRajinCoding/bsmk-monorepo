@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.besokmasak.R
@@ -13,6 +16,7 @@ import com.example.besokmasak.adapter.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.model.response.Recipe
 import com.example.besokmasak.model.response.RecipeResponse
+import com.example.besokmasak.viewmodel.RecipeViewModel
 import com.google.gson.Gson
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -23,32 +27,18 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private lateinit var binding: ActivityRecipeResultBinding
+    private lateinit var adapter: RecipeResultAdapter
 
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
-
-    private fun collectRecipe(): List<Recipe> {
-        val gson = Gson()
-        val stringResponse = intent.getStringExtra("RecipeResponse")
-        val ingredients = intent.getStringExtra("ingredients")
-        val method = intent.getStringExtra("method")
-        val listOfRecipe = stringResponse?.let {
-            val recipeResponse = gson.fromJson(it, RecipeResponse::class.java)
-            recipeResponse.recipes
-        } ?: emptyList()
-
-        if (listOfRecipe.isEmpty()){
-            Log.e("error", "Failed to parse recipe data")
-        }
-
-        return listOfRecipe
-    }
+    //private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
+    private val viewModel : RecipeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        collectRecipe()
+        viewModel.generateRecipe()
+        adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
         initialize()
     }
 
@@ -73,13 +63,11 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         }
     }
 
-    private fun generateRecipe(ingredients : String, method : String){
-
-    }
-
     private fun paginate(){
         val old = adapter.getRecipeList()
-        val new = old.plus(generateRecipe())
+        viewModel.generateRecipe()
+        val new = old.plus(viewModel.listOfRecipe)
+        adapter.updateRecipeList(new)
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {

@@ -1,4 +1,4 @@
-package com.example.besokmasak.model.request
+package com.example.besokmasak.core.data.source.remote.request
 
 import androidx.lifecycle.MutableLiveData
 

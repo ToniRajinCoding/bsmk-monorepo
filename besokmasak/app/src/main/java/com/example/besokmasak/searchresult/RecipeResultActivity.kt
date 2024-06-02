@@ -1,4 +1,4 @@
-package com.example.besokmasak.ui
+package com.example.besokmasak.searchresult
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,17 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.besokmasak.R
-import com.example.besokmasak.adapter.RecipeResultAdapter
+import com.example.besokmasak.ui.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
-import com.example.besokmasak.model.response.Recipe
-import com.example.besokmasak.model.response.RecipeResponse
-import com.example.besokmasak.viewmodel.RecipeViewModel
-import com.google.gson.Gson
+import com.example.besokmasak.ui.RecipeViewModel
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction

@@ -1,20 +1,12 @@
-package com.example.besokmasak.ui
+package com.example.besokmasak.search
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.besokmasak.api.remote.RetrofitClient
 import com.example.besokmasak.databinding.ActivitySearchBinding
-import com.example.besokmasak.model.request.RecipeRequest
-import com.example.besokmasak.model.response.RecipeResponse
-import com.example.besokmasak.viewmodel.RecipeViewModel
-import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.besokmasak.searchresult.RecipeResultActivity
+import com.example.besokmasak.ui.RecipeViewModel
 
 class SearchActivity : AppCompatActivity() {
 

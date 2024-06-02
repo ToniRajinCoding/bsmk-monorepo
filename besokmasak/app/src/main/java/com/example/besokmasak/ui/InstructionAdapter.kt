@@ -1,11 +1,9 @@
-package com.example.besokmasak.adapter
+package com.example.besokmasak.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.besokmasak.databinding.RecipeDetailBinding
 import com.example.besokmasak.databinding.RecipeItemListBinding
-import com.example.besokmasak.model.response.Recipe
 
 class InstructionAdapter(private val instructionList: List<String>) :
     RecyclerView.Adapter<InstructionAdapter.InstructionsViewHolder>() {

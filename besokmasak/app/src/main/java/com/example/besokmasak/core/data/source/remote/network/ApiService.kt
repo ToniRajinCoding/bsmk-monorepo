@@ -1,7 +1,7 @@
-package com.example.besokmasak.api.remote
+package com.example.besokmasak.core.data.source.remote.network
 
-import com.example.besokmasak.model.request.RecipeRequest
-import com.example.besokmasak.model.response.RecipeResponse
+import com.example.besokmasak.core.data.source.remote.request.RecipeRequest
+import com.example.besokmasak.core.data.source.remote.response.RecipeResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -12,4 +12,5 @@ interface ApiService {
     fun createQuery(
         @Body requestBody: RecipeRequest
     ) : Call<RecipeResponse>
+
 }

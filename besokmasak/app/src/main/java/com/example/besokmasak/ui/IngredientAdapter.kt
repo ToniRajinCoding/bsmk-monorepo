@@ -1,8 +1,7 @@
-package com.example.besokmasak.adapter
+package com.example.besokmasak.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AbsListView.RecyclerListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.besokmasak.databinding.RecipeItemListBinding
 

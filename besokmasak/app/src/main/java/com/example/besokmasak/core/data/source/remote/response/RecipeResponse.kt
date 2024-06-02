@@ -1,6 +1,4 @@
-package com.example.besokmasak.model.response
-
-import android.os.Parcelable
+package com.example.besokmasak.core.data.source.remote.response
 
 data class RecipeResponse(
     val recipes: List<Recipe>

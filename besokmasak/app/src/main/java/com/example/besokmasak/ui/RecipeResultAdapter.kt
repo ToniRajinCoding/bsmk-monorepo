@@ -1,4 +1,4 @@
-package com.example.besokmasak.adapter
+package com.example.besokmasak.ui
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.RecipeDetailBinding
-import com.example.besokmasak.model.response.Recipe
+import com.example.besokmasak.core.data.source.remote.response.Recipe
 import com.example.besokmasak.utils.RecipeDiffCallBack
 
 class RecipeResultAdapter(

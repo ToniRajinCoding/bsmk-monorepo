@@ -1,7 +1,7 @@
 package com.example.besokmasak.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.besokmasak.model.response.Recipe
+import com.example.besokmasak.core.data.source.remote.response.Recipe
 
 class RecipeDiffCallBack(
     private val old: List<Recipe>,

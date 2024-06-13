@@ -1,4 +1,4 @@
-package com.example.besokmasak.core.data.source.remote
+package com.example.besokmasak.core.data.source
 
 import okhttp3.Interceptor
 import okhttp3.Response

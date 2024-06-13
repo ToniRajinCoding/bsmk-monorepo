@@ -10,9 +10,7 @@ import okhttp3.RequestBody
 
 interface RecipeUseCase {
     suspend fun searchRecipe(recipeRequest: RecipeRequest) : Flow<Resource<List<Recipes>>>
-
     fun getAllRecipe() : Flow<List<Recipes>>
-
     suspend fun updateFavoritedRecipe(recipe: Recipes,  state: Boolean)
 
 }

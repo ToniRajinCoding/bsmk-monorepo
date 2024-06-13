@@ -35,7 +35,6 @@ class SearchViewModel @Inject constructor(private val recipeUseCase: RecipeUseCa
                 _recipesLiveData.value = resource
             }
         }
-
     }
 
 }

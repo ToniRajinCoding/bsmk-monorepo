@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiService: ApiService){
 
-    //gausah karena udah di inject
+// gausah karena udah di inject
 //    companion object{
 //        @Volatile
 //        private var instance: RemoteDataSource? = null
@@ -29,7 +29,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
 //    }
 
     fun searchQuery(recipeRequest: RecipeRequest) : Flow<ApiResponse<List<Recipe>>> {
-
 
         return flow {
             try{

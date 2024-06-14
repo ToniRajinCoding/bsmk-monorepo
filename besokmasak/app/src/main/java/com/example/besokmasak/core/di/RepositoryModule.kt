@@ -10,6 +10,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class, DatabaseModule::class])
 @InstallIn(SingletonComponent::class)
@@ -18,6 +22,9 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideRepositoryInterface(recipeRepository: RecipeRepository): IRecipeRepository
 
+    @Binds
+    abstract fun provideUseCaseInterface()
+
     @Provides
     fun provideRepository(
         remoteDataSource: RemoteDataSource,
@@ -25,6 +32,14 @@ abstract class RepositoryModule {
         appExecutors: AppExecutors
     ): IRecipeRepository {
         return RecipeRepository(remoteDataSource,localDataSource,appExecutors)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoroutineScope(): CoroutineScope {
+        val supervisorJob = SupervisorJob()
+        val ioDispatcher = Dispatchers.IO
+        return CoroutineScope(supervisorJob + ioDispatcher)
     }
 
 }

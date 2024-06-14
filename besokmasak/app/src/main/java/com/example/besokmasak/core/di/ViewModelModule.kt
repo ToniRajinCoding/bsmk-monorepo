@@ -1,5 +1,6 @@
 package com.example.besokmasak.core.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,13 +15,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ViewModelModule{
 
-    @Provides
-    @Singleton
-    fun provideCoroutineScope(): CoroutineScope {
-        val supervisorJob = SupervisorJob()
-        val ioDispatcher = Dispatchers.IO
-        return CoroutineScope(supervisorJob + ioDispatcher)
-    }
+
+
+    @Binds
+
 
 
 }

@@ -7,7 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.ui.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.ui.RecipeViewModel
@@ -17,6 +21,10 @@ import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
@@ -26,14 +34,38 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private val manager by lazy { CardStackLayoutManager(this, this) }
     //private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
-    private val viewModel : RecipeViewModel by viewModels()
+    private val viewModel : RecipeResultViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.generateRecipe()
-        adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
+
+        val ingredients = intent.getStringExtra("ingredients")
+        val method = intent.getStringExtra("method")
+
+        if(ingredients != null && method != null){
+
+            viewModel.searchQuery(ingredients,method)
+
+//            viewModel.recipesFlow.observeFlow(this)
+
+//            lifecycleScope.launch {
+//                repeatOnLifecycle(Lifecycle.State.STARTED){
+//                   viewModel.recipesFlow.collect{ resource ->
+//                       when(resource){
+//
+//                       }
+//                   }
+//                }
+//            }
+
+
+        //viewModel.searchQuery(ingredients, method)
+        }
+
+
+        //adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
         initialize()
     }
 

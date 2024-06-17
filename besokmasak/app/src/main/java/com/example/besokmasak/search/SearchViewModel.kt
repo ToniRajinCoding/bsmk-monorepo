@@ -19,22 +19,22 @@ class SearchViewModel @Inject constructor(private val recipeUseCase: RecipeUseCa
     private val viewModelScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 ) : ViewModel() {
 
-    private val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
-    val recipesLiveData: LiveData<Resource<List<Recipes>>> = _recipesLiveData
-
-    //val searchRecipes = recipeUseCase.searchRecipe(searchQuery.value!!)
-
-    fun onSearchQuery(ingredients : String, method: String){
-        val requestBody = RecipeRequest(
-            ingredients = ingredients,
-            method = method
-        )
-
-        viewModelScope.launch {
-            val recipes = recipeUseCase.searchRecipe(requestBody).collect{ resource ->
-                _recipesLiveData.value = resource
-            }
-        }
-    }
+//    private val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
+//    val recipesLiveData: LiveData<Resource<List<Recipes>>> = _recipesLiveData
+//
+//    //val searchRecipes = recipeUseCase.searchRecipe(searchQuery.value!!)
+//
+//    fun onSearchQuery(ingredients : String, method: String){
+//        val requestBody = RecipeRequest(
+//            ingredients = ingredients,
+//            method = method
+//        )
+//
+//        viewModelScope.launch {
+//            val recipes = recipeUseCase.searchRecipe(requestBody).collect{ resource ->
+//                _recipesLiveData.value = resource
+//            }
+//        }
+//    }
 
 }

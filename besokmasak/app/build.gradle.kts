@@ -65,6 +65,7 @@ dependencies {
 
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx")
     implementation("androidx.activity:activity-ktx")
 
@@ -72,9 +73,13 @@ dependencies {
     kapt("androidx.room:room-compiler")
     androidTestImplementation("androidx.room:room-testing")
 
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+
 }

@@ -3,6 +3,7 @@ package com.example.besokmasak.search
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.besokmasak.databinding.ActivitySearchBinding
 import com.example.besokmasak.searchresult.RecipeResultActivity
@@ -12,7 +13,9 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
 
-    private val viewModel by lazy { ViewModelProvider(this).get(RecipeViewModel::class.java) }
+    //private val viewModel by lazy { ViewModelProvider(this).get(RecipeViewModel::class.java) }
+
+    //private val viewModel : SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +28,8 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, RecipeResultActivity::class.java)
 
         binding.btnSubmit.setOnClickListener {
-            viewModel.setInputs(ingredients,method)
+            intent.putExtra("ingredients", ingredients)
+            intent.putExtra("method", method)
             startActivity(intent)
         }
     }

@@ -22,24 +22,27 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideRepositoryInterface(recipeRepository: RecipeRepository): IRecipeRepository
 
-    @Binds
-    abstract fun provideUseCaseInterface()
+    //gausah juga karena sudah di cariin sama hilt
+//    @Binds
+//    abstract fun provideUseCaseInterface()
 
-    @Provides
+//    Ga usah karena sudah automatis di locate sama Hilt
+/*    @Provides
     fun provideRepository(
         remoteDataSource: RemoteDataSource,
         localDataSource: LocalDataSource,
         appExecutors: AppExecutors
     ): IRecipeRepository {
         return RecipeRepository(remoteDataSource,localDataSource,appExecutors)
-    }
+    }*/
 
-    @Provides
-    @Singleton
-    fun provideCoroutineScope(): CoroutineScope {
-        val supervisorJob = SupervisorJob()
-        val ioDispatcher = Dispatchers.IO
-        return CoroutineScope(supervisorJob + ioDispatcher)
-    }
+    //gausah karena hilt udah cari Coroutine Scope secara otomatis
+//    @Provides
+//    @Singleton
+//    fun provideCoroutineScope(): CoroutineScope {
+//        val supervisorJob = SupervisorJob()
+//        val ioDispatcher = Dispatchers.IO
+//        return CoroutineScope(supervisorJob + ioDispatcher)
+//    }
 
 }

@@ -48,27 +48,29 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         val method = intent.getStringExtra("method")
         Log.d("ingredient method logging : ", "$ingredients & $method")
 
-
         //if the intent passed successfully
         if(ingredients != null && method != null){
             viewModel.searchQuery(ingredients,method)
             viewModel.recipesLiveData.observe(this) { resource ->
                 when (resource) {
                     is Resource.Success -> {
+                        binding.loadingBar.visibility = View.INVISIBLE
                         val recipes = resource.data!!
                         initialize(recipes)
                     }
                     is Resource.Loading -> {
                         //show loading indicator
+
                     }
                     is Resource.Error -> {
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
                     }
                 }
             }
-
-
         }
+
+        if(manager.topPosition > 5) paginate()
+
         //adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
 
     }
@@ -100,10 +102,28 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun paginate(){
-        val old = adapter.getRecipeList()
-        viewModel.generateRecipe()
-        val new = old.plus(viewModel.listOfRecipe)
-        adapter.updateRecipeList(new)
+
+        val ingredients = intent.getStringExtra("ingredients")
+        val method = intent.getStringExtra("method")
+
+        if (ingredients != null && method != null){
+            viewModel.searchQuery(ingredients,method)
+
+            viewModel.recipesLiveData.observe(this){resource ->
+                when(resource){
+                    is Resource.Success -> {
+                        adapter.updateRecipeList(resource.data!!)
+                    }
+                    is Resource.Loading -> {}
+                    is Resource.Error -> {
+                        Log.d("error generating new recipes", resource.message ?: "error")
+                    }
+                }
+            }
+
+        }
+
+
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {

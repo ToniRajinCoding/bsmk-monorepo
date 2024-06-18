@@ -7,6 +7,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/loadingBar"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/csv_recipe_detail"
@@ -14,14 +25,8 @@
         android:layout_height="match_parent"
         android:background="#FEFAF6"
         android:padding="0dp"
-        >
-
-        <!--    <androidx.recyclerview.widget.RecyclerView-->
-        <!--        android:id="@+id/rv_recipe_detail"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        />-->
-
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
     </com.yuyakaido.android.cardstackview.CardStackView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

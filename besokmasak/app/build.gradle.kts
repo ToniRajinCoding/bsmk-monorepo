@@ -2,9 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")
 }
 
 kapt {
@@ -51,7 +49,7 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.room:room-common:2.6.1")
@@ -81,5 +79,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+
+    implementation("com.github.ybq:Android-SpinKit:1.4.0")
 
 }

@@ -8,10 +8,12 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.core.data.source.Resource
+import com.example.besokmasak.core.domain.model.Recipes
 import com.example.besokmasak.ui.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.ui.RecipeViewModel
@@ -23,6 +25,7 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -33,7 +36,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     private lateinit var adapter: RecipeResultAdapter
 
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    //private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
+    // private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
     private val viewModel : RecipeResultViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,33 +46,38 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
+        Log.d("ingredient method logging : ", "$ingredients & $method")
 
+
+        //if the intent passed successfully
         if(ingredients != null && method != null){
-
             viewModel.searchQuery(ingredients,method)
+            viewModel.recipesLiveData.observe(this) { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        val recipes = resource.data!!
+                        initialize(recipes)
+                    }
+                    is Resource.Loading -> {
+                        //show loading indicator
+                    }
+                    is Resource.Error -> {
+                        Log.e("Error dalam resource", resource.message ?: "error dalam resource")
+                    }
+                }
+            }
 
-//            viewModel.recipesFlow.observeFlow(this)
 
-//            lifecycleScope.launch {
-//                repeatOnLifecycle(Lifecycle.State.STARTED){
-//                   viewModel.recipesFlow.collect{ resource ->
-//                       when(resource){
-//
-//                       }
-//                   }
-//                }
-//            }
-
-
-        //viewModel.searchQuery(ingredients, method)
         }
-
-
         //adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
-        initialize()
+
     }
 
-    private fun initialize() {
+    private fun initialize(recipes: List<Recipes>) {
+
+        adapter = RecipeResultAdapter(recipes, LayoutInflater.from(this))
+        binding.csvRecipeDetail.adapter = adapter
+
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
@@ -81,8 +89,9 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         manager.setCanScrollVertical(false)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
+
         binding.csvRecipeDetail.layoutManager = manager
-        binding.csvRecipeDetail.adapter = adapter
+
         binding.csvRecipeDetail.itemAnimator.apply {
             if (this is DefaultItemAnimator){
                 supportsChangeAnimations = false

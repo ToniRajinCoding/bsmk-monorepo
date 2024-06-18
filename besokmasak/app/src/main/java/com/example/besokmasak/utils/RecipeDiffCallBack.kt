@@ -2,10 +2,11 @@ package com.example.besokmasak.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.besokmasak.core.data.source.remote.response.Recipe
+import com.example.besokmasak.core.domain.model.Recipes
 
 class RecipeDiffCallBack(
-    private val old: List<Recipe>,
-    private val new: List<Recipe>
+    private val old: List<Recipes>,
+    private val new: List<Recipes>
     ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return old.size

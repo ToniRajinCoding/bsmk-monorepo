@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.RecipeDetailBinding
 import com.example.besokmasak.core.data.source.remote.response.Recipe
+import com.example.besokmasak.core.domain.model.Recipes
 import com.example.besokmasak.utils.RecipeDiffCallBack
 
 class RecipeResultAdapter(
-    private var recipeList: List<Recipe>,
+    private var recipeList: List<Recipes>,
     private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<RecipeResultAdapter.RecipeResponseViewHolder>() {
 
@@ -28,17 +29,17 @@ class RecipeResultAdapter(
         return recipeList.size
     }
 
-    fun updateRecipeList(newData: List<Recipe>){
+    fun updateRecipeList(newData: List<Recipes>){
         val diffCallback = RecipeDiffCallBack(this.recipeList, newData)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         diffResult.dispatchUpdatesTo(this)
     }
 
-    fun setRecipeList(recipeList: List<Recipe>){
+    fun setRecipeList(recipeList: List<Recipes>){
         this.recipeList = recipeList
     }
 
-    fun getRecipeList() : List<Recipe> {
+    fun getRecipeList() : List<Recipes> {
         return recipeList
     }
 

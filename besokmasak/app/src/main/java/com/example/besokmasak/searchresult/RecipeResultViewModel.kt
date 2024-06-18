@@ -25,16 +25,20 @@ class RecipeResultViewModel @Inject constructor(
     private val viewModelScope : CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 ) : ViewModel() {
 
-    private val _recipesFlow = MutableStateFlow<Flow<Resource<List<Recipes>>>?>(null)
-    val recipesFlow : StateFlow<Flow<Resource<List<Recipes>>>?> = _recipesFlow
+    private val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
+    val recipesLiveData : LiveData<Resource<List<Recipes>>> = _recipesLiveData
 
 
     fun searchQuery(ingredients: String, method: String){
         val recipeRequest = RecipeRequest(ingredients = ingredients, method = method)
 
+
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)
-            _recipesFlow.value = recipesFlow
+
+            recipesFlow.collect{resource ->
+                _recipesLiveData.postValue(resource)
+            }
         }
 
 //: LiveData<Resource<List<Recipes>>>

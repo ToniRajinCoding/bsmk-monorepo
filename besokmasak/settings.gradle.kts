@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         jcenter()
-        mavenCentral()
     }
 }
 

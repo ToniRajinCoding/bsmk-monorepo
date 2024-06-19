@@ -5,10 +5,6 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 android {
     namespace = "com.example.besokmasak"
     compileSdk = 34
@@ -56,29 +52,27 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("androidx.multidex:multidex")
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx")
-    implementation("androidx.activity:activity-ktx")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation("androidx.activity:activity-ktx:1.9.0")
 
-    implementation("androidx.room:room-runtime")
-    kapt("androidx.room:room-compiler")
-    androidTestImplementation("androidx.room:room-testing")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-compiler:2.51.1")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("androidx.hilt:hilt-compiler:1.2.0")
-    implementation("androidx.hilt:hilt-navigation-compose")
+//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+//    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0-RC")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     implementation("com.github.ybq:Android-SpinKit:1.4.0")
 

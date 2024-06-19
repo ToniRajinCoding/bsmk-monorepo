@@ -309,23 +309,23 @@ function generateDummyRecipe() {
   return recipes;
 }
 
-app.post("/get-recipe", async (req, res) => {
-  try {
-    const { ingredients, method } = req.body;
-    const recipe = await getRecipe(ingredients, method);
-    console.log(recipe);
-    res.send(recipe);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error generating recipe");
-  }
-});
+// app.post("/get-recipe", async (req, res) => {
+//   try {
+//     const { ingredients, method } = req.body;
+//     const recipe = await getRecipe(ingredients, method);
+//     console.log(recipe);
+//     res.send(recipe);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Error generating recipe");
+//   }
+// });
 
 app.post("/get-dummy-recipe", (req, res) => {
   try {
     const { ingredients, method } = req.body;
     const response = generateDummyRecipe();
-    console.log(recipe);
+    console.log(response);
     res.send(response);
   } catch (error) {
     console.error(error);

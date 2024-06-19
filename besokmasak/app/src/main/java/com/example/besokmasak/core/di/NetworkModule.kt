@@ -28,7 +28,7 @@ class NetworkModule {
     @Singleton
     fun provideApiService(client: OkHttpClient) : ApiService {
         val retrofit = Retrofit.Builder().
-            baseUrl("http://10.0.2.2:3000")
+            baseUrl("http://192.168.0.111:3000")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

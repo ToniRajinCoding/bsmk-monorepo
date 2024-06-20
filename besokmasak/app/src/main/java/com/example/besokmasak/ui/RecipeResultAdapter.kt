@@ -30,8 +30,12 @@ class RecipeResultAdapter(
     }
 
     fun updateRecipeList(newData: List<Recipes>){
-        val diffCallback = RecipeDiffCallBack(this.recipeList, newData)
+        Log.d("asd","masuk logging update")
+        val old = getRecipeList()
+        val new = old.plus(newData)
+        val diffCallback = RecipeDiffCallBack(old, new)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
+        setRecipeList(newData)
         diffResult.dispatchUpdatesTo(this)
     }
 

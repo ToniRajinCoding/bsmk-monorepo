@@ -1,5 +1,6 @@
 package com.example.besokmasak.searchresult
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,12 +31,11 @@ class RecipeResultViewModel @Inject constructor(
 
 
     fun searchQuery(ingredients: String, method: String){
+        Log.d("Search Query","Search Query Dijalankan")
         val recipeRequest = RecipeRequest(ingredients = ingredients, method = method)
-
 
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)
-
             recipesFlow.collect{resource ->
                 _recipesLiveData.postValue(resource)
             }

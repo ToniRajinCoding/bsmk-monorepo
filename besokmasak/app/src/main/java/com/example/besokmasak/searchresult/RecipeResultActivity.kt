@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private lateinit var binding: ActivityRecipeResultBinding
-    private lateinit var adapter: RecipeResultAdapter
+    private var adapter: RecipeResultAdapter? = null
 
     private val manager by lazy { CardStackLayoutManager(this, this) }
     // private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
@@ -48,6 +48,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         val method = intent.getStringExtra("method")
         Log.d("ingredient method logging : ", "$ingredients & $method")
 
+        initialize()
+
         //if the intent passed successfully
         if(ingredients != null && method != null){
             viewModel.searchQuery(ingredients,method)
@@ -55,12 +57,17 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                 when (resource) {
                     is Resource.Success -> {
                         binding.loadingBar.visibility = View.INVISIBLE
+                        binding.csvRecipeDetail.visibility = View.VISIBLE
                         val recipes = resource.data!!
-                        initialize(recipes)
+                        adapter?.updateRecipeList(recipes) ?: run {
+                            adapter = RecipeResultAdapter(recipes, LayoutInflater.from(this))
+                            binding.csvRecipeDetail.adapter = adapter
+                        }
                     }
                     is Resource.Loading -> {
                         //show loading indicator
-
+                        binding.loadingBar.visibility = View.VISIBLE
+                        binding.csvRecipeDetail.visibility = View.INVISIBLE
                     }
                     is Resource.Error -> {
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
@@ -69,16 +76,11 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
             }
         }
 
-        if(manager.topPosition > 5) paginate()
 
-        //adapter = RecipeResultAdapter(viewModel.listOfRecipe, LayoutInflater.from(this))
 
     }
 
-    private fun initialize(recipes: List<Recipes>) {
-
-        adapter = RecipeResultAdapter(recipes, LayoutInflater.from(this))
-        binding.csvRecipeDetail.adapter = adapter
+    private fun initialize() {
 
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
@@ -102,7 +104,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun paginate(){
-
+        Log.d("Paginate", "Paginate DI jalankan")
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
 
@@ -112,22 +114,25 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
             viewModel.recipesLiveData.observe(this){resource ->
                 when(resource){
                     is Resource.Success -> {
-                        adapter.updateRecipeList(resource.data!!)
+                        Log.d("PAGINATE", "PAGINATE SUCCESS")
+                        adapter?.updateRecipeList(resource.data!!)
                     }
-                    is Resource.Loading -> {}
+                    is Resource.Loading -> {
+                        Log.d("PAGINATE", "PAGINATE LOADING")
+                    }
                     is Resource.Error -> {
-                        Log.d("error generating new recipes", resource.message ?: "error")
+                        Log.d("error generating new recipes PAGINATE", resource.message ?: "error")
                     }
                 }
             }
-
         }
-
-
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
+        if (manager.topPosition == (adapter!!.itemCount - 2 )) {
+            paginate()
+        }
     }
 
     override fun onCardSwiped(direction: Direction?) {

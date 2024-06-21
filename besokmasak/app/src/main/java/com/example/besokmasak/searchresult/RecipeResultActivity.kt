@@ -66,8 +66,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                     }
                     is Resource.Loading -> {
                         //show loading indicator
-                        binding.loadingBar.visibility = View.VISIBLE
-                        binding.csvRecipeDetail.visibility = View.INVISIBLE
+//                        binding.loadingBar.visibility = View.VISIBLE
+//                        binding.csvRecipeDetail.visibility = View.INVISIBLE
                     }
                     is Resource.Error -> {
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
@@ -115,7 +115,10 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                 when(resource){
                     is Resource.Success -> {
                         Log.d("PAGINATE", "PAGINATE SUCCESS")
-                        adapter?.updateRecipeList(resource.data!!)
+                        binding.csvRecipeDetail.post {
+                            adapter?.updateRecipeList(resource.data!!)
+                            adapter?.notifyDataSetChanged()
+                        }
                     }
                     is Resource.Loading -> {
                         Log.d("PAGINATE", "PAGINATE LOADING")
@@ -130,7 +133,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
-        if (manager.topPosition == (adapter!!.itemCount - 2 )) {
+        if (manager.topPosition == (adapter!!.itemCount)) {
             paginate()
         }
     }

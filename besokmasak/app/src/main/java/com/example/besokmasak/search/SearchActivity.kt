@@ -21,7 +21,6 @@ import com.example.besokmasak.R
 import com.example.besokmasak.databinding.ActivitySearchBinding
 import com.example.besokmasak.favorite.FavoriteActivity
 import com.example.besokmasak.searchresult.RecipeResultActivity
-import com.example.besokmasak.ui.RecipeViewModel
 import com.google.android.material.navigation.NavigationView
 
 class SearchActivity : AppCompatActivity() {

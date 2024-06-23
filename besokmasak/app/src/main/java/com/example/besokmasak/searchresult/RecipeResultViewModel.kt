@@ -40,13 +40,12 @@ class RecipeResultViewModel @Inject constructor(
                 _recipesLiveData.postValue(resource)
             }
         }
+    }
 
-//: LiveData<Resource<List<Recipes>>>
-//        val recipeList : LiveData<Resource<List<Recipes>>> = LiveData {
-//            val recipes = recipeUseCase.searchRecipe(ingredients,method)
-//            emit(recipes)
-//        }
-
+    fun updateFavoriteState(recipe:Recipes, state: Boolean){
+        viewModelScope.launch {
+            recipeUseCase.updateFavoritedRecipe(recipe,state)
+        }
     }
 
 

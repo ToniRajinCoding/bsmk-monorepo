@@ -16,7 +16,6 @@ import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.core.domain.model.Recipes
 import com.example.besokmasak.ui.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
-import com.example.besokmasak.ui.RecipeViewModel
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -76,8 +75,9 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
             }
         }
 
+        binding.fabFavorite.setOnClickListener{
 
-
+        }
     }
 
     private fun initialize() {

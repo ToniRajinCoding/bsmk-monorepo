@@ -68,7 +68,7 @@ class RecipeRepository @Inject constructor(
         recipeEntity.isFavorited = state
 
         //check if its already favorited or not
-        if (recipe.isFavorited == false) {
+        if (!recipe.isFavorited) {
             //setFavorite
             localDataSource.updateFavoritedRecipe(recipeEntity)
             localDataSource.insertFavoriteRecipe(recipeEntity)

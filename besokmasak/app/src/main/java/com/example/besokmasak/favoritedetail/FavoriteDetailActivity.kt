@@ -1,21 +1,23 @@
 package com.example.besokmasak.favoritedetail
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.besokmasak.R
+import com.example.besokmasak.databinding.ActivityFavoriteBinding
+import com.example.besokmasak.databinding.ActivityFavoriteDetailBinding
+
 
 class FavoriteDetailActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityFavoriteDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_favorite_detail)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityFavoriteDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+
+
     }
 }

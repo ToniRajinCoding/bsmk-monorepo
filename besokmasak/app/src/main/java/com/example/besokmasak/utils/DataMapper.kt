@@ -13,7 +13,7 @@ object DataMapper {
             ingredients = it.ingredients,
             instructions = it.instructions,
             recipe_name = it.recipe_name,
-            isFavorited = null
+            isFavorited = false
         )
     }
 //        val recipeList = ArrayList<RecipeEntity>()

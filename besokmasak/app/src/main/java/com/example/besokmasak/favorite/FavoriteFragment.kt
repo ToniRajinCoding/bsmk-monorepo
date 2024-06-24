@@ -5,14 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelLazy
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.besokmasak.R
 import com.example.besokmasak.databinding.FragmentFavoriteBinding
-import com.example.besokmasak.databinding.FragmentSearchBinding
-import com.example.besokmasak.ui.FavoriteAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +29,7 @@ class FavoriteFragment : Fragment() {
 
         if(activity!=null){
 
-            val favoriteAdapter = FavoriteAdapter()
+            val favoriteAdapter = FavoriteAdapter(viewmodel, requireContext())
             viewmodel.favoriteRecipe.observe(viewLifecycleOwner){ dataRecipe ->
                 favoriteAdapter.setItem(dataRecipe)
             }

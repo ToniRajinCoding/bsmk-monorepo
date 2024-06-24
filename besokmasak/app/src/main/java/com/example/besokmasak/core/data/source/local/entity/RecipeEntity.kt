@@ -22,7 +22,7 @@ data class RecipeEntity(
     var instructions: List<String>,
 
     @ColumnInfo(name = "isFavorited")
-    var isFavorited: Boolean?
+    var isFavorited: Boolean
 
 
 )

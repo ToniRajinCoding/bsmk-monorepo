@@ -22,7 +22,9 @@ import com.example.besokmasak.databinding.ActivitySearchBinding
 import com.example.besokmasak.favorite.FavoriteActivity
 import com.example.besokmasak.searchresult.RecipeResultActivity
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding

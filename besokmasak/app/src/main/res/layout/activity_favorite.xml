@@ -7,4 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".favorite.FavoriteActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavoriteDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

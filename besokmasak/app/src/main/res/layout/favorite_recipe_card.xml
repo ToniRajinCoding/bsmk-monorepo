@@ -28,7 +28,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="transparent"
+        android:background="@color/black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

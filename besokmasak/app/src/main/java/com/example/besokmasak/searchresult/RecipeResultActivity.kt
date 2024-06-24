@@ -7,14 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.core.data.source.Resource
-import com.example.besokmasak.core.domain.model.Recipes
-import com.example.besokmasak.ui.RecipeResultAdapter
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -22,21 +16,16 @@ import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private lateinit var binding: ActivityRecipeResultBinding
-    private var adapter: RecipeResultAdapter? = null
 
     private val manager by lazy { CardStackLayoutManager(this, this) }
     // private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
     private val viewModel : RecipeResultViewModel by viewModels()
+    private lateinit var adapter: RecipeResultAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +38,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
         initialize()
 
+        adapter = RecipeResultAdapter(viewModel)
+
         //if the intent passed successfully
         if(ingredients != null && method != null){
             viewModel.searchQuery(ingredients,method)
@@ -58,15 +49,18 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                         binding.loadingBar.visibility = View.INVISIBLE
                         binding.csvRecipeDetail.visibility = View.VISIBLE
                         val recipes = resource.data!!
-                        adapter?.updateRecipeList(recipes) ?: run {
-                            adapter = RecipeResultAdapter(recipes, LayoutInflater.from(this))
-                            binding.csvRecipeDetail.adapter = adapter
-                        }
+//                        adapter?.updateRecipeList(recipes) ?: run {
+//                            adapter = RecipeResultAdapter(viewModel)
+//                            binding.csvRecipeDetail.adapter = adapter
+//                        }
+                        adapter = RecipeResultAdapter(viewModel)
+                        adapter.setRecipeList(recipes)
+                        binding.csvRecipeDetail.adapter = adapter
                     }
                     is Resource.Loading -> {
                         //show loading indicator
-//                        binding.loadingBar.visibility = View.VISIBLE
-//                        binding.csvRecipeDetail.visibility = View.INVISIBLE
+                        binding.loadingBar.visibility = View.VISIBLE
+                        binding.csvRecipeDetail.visibility = View.INVISIBLE
                     }
                     is Resource.Error -> {
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
@@ -75,9 +69,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
             }
         }
 
-        binding.fabFavorite.setOnClickListener{
 
-        }
     }
 
     private fun initialize() {
@@ -116,8 +108,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                     is Resource.Success -> {
                         Log.d("PAGINATE", "PAGINATE SUCCESS")
                         binding.csvRecipeDetail.post {
-                            adapter?.updateRecipeList(resource.data!!)
-                            adapter?.notifyDataSetChanged()
+                            adapter.updateRecipeList(resource.data!!)
+                            adapter.notifyDataSetChanged()
                         }
                     }
                     is Resource.Loading -> {
@@ -133,9 +125,9 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
-        if (manager.topPosition == (adapter!!.itemCount)) {
-            paginate()
-        }
+//        if (manager.topPosition == (adapter!!.itemCount)) {
+//            //paginate()
+//        }
     }
 
     override fun onCardSwiped(direction: Direction?) {

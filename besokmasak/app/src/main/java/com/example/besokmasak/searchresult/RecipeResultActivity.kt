@@ -1,5 +1,6 @@
 package com.example.besokmasak.searchresult
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,11 @@ import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 
 @AndroidEntryPoint
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
@@ -49,10 +55,6 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                         binding.loadingBar.visibility = View.INVISIBLE
                         binding.csvRecipeDetail.visibility = View.VISIBLE
                         val recipes = resource.data!!
-//                        adapter?.updateRecipeList(recipes) ?: run {
-//                            adapter = RecipeResultAdapter(viewModel)
-//                            binding.csvRecipeDetail.adapter = adapter
-//                        }
                         adapter = RecipeResultAdapter(viewModel)
                         adapter.setRecipeList(recipes)
                         binding.csvRecipeDetail.adapter = adapter
@@ -96,38 +98,46 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun paginate(){
-        Log.d("Paginate", "Paginate DI jalankan")
+        val scope = CoroutineScope(Dispatchers.IO)
+
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
 
         if (ingredients != null && method != null){
-            viewModel.searchQuery(ingredients,method)
 
-            viewModel.recipesLiveData.observe(this){resource ->
-                when(resource){
-                    is Resource.Success -> {
-                        Log.d("PAGINATE", "PAGINATE SUCCESS")
-                        binding.csvRecipeDetail.post {
-                            adapter.updateRecipeList(resource.data!!)
-                            adapter.notifyDataSetChanged()
+            Log.d("Paginate", "Paginate DI jalankan")
+
+            scope.launch {
+                viewModel.searchQuery(ingredients,method)
+                withContext(Dispatchers.Main){
+                    viewModel.recipesLiveData.observe(this@RecipeResultActivity) {resource ->
+                        when(resource){
+                            is Resource.Success -> {
+                                Log.d("PAGINATE", "PAGINATE SUCCESS")
+                                binding.csvRecipeDetail.post {
+                                    adapter.generateRecipeList(resource.data!!)
+                                }
+                            }
+                            is Resource.Loading -> {
+                                Log.d("PAGINATE", "PAGINATE LOADING")
+                            }
+                            is Resource.Error -> {
+                                Log.d("error generating new recipes PAGINATE", resource.message ?: "error")
+                            }
                         }
-                    }
-                    is Resource.Loading -> {
-                        Log.d("PAGINATE", "PAGINATE LOADING")
-                    }
-                    is Resource.Error -> {
-                        Log.d("error generating new recipes PAGINATE", resource.message ?: "error")
                     }
                 }
             }
+
         }
     }
 
+
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
-//        if (manager.topPosition == (adapter!!.itemCount)) {
-//            //paginate()
-//        }
+        if (manager.topPosition == (adapter.itemCount - 3) ) {
+            paginate()
+        }
     }
 
     override fun onCardSwiped(direction: Direction?) {

@@ -26,7 +26,6 @@ class RecipeResultAdapter(
         fun bind(data: Recipes, viewmodel:RecipeResultViewModel) {
             with(binding) {
                 Log.d("isi dari recipes, recipe name: ", data.recipe_name)
-                Log.d("isi dari recipes, ingredients ", data.ingredients.toString())
                 val instructionAdapter = InstructionAdapter(data.instructions)
                 val ingredientAdapter = IngredientAdapter(data.ingredients)
                 tvTitle.text = data.recipe_name
@@ -68,6 +67,13 @@ class RecipeResultAdapter(
         listRecipe.clear()
         listRecipe.addAll(recipeList)
         notifyDataSetChanged()
+    }
+
+    fun generateRecipeList(recipeList: List<Recipes>){
+        listRecipe.addAll(recipeList)
+        notifyItemRangeChanged(itemCount,recipeList.size)
+//        listRecipe.addAll(recipeList)
+//        notifyDataSetChanged()
     }
 
     fun getRecipeList(): List<Recipes> {

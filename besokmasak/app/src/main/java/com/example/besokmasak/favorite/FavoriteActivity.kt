@@ -22,7 +22,7 @@ class FavoriteActivity : AppCompatActivity() {
         binding = RecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = intent.getParcelableExtra("recipe", Recipes::class.java)
+        val data = intent.getParcelableExtra("recipes", Recipes::class.java)
 
         Log.d("LOGGING", data.toString())
 

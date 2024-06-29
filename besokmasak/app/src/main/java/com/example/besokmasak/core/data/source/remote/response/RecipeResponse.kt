@@ -5,7 +5,7 @@ data class RecipeResponse(
 )
 
 data class Recipe(
+    val recipe_name: String,
     val ingredients: List<String>,
     val instructions: List<String>,
-    val recipe_name: String
 )

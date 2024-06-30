@@ -29,7 +29,7 @@ class FavoriteActivity : AppCompatActivity() {
         if (data != null) {
             ingredientAdapter = IngredientAdapter(data.ingredients)
             instructionAdapter = InstructionAdapter(data.instructions)
-            binding.tvTitle.text = data.recipe_name
+            binding.tvRecipeName.text = data.recipe_name
 
             Log.d("recipe name", data.recipe_name)
 

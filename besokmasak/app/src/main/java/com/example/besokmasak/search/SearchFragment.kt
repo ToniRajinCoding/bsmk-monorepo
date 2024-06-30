@@ -26,8 +26,8 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        val ingredients = binding.etMaterial.text.toString()
-        val method = binding.etMasakType.text.toString()
+        val ingredients = binding.etIngredients.text.toString()
+        val method = binding.etMethod.text.toString()
         val intent = Intent(requireActivity().applicationContext, RecipeResultActivity::class.java)
 
         binding.btnSubmit.setOnClickListener {
@@ -35,8 +35,6 @@ class SearchFragment : Fragment() {
             intent.putExtra("method", method)
             startActivity(intent)
         }
-
-
 
         return binding.root
     }

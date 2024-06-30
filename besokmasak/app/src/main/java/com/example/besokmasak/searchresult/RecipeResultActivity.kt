@@ -135,9 +135,6 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
-        if (manager.topPosition == (adapter.itemCount - 3) ) {
-            paginate()
-        }
     }
 
     override fun onCardSwiped(direction: Direction?) {
@@ -154,6 +151,11 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardAppeared(view: View?, position: Int) {
         Log.d("CardStackView", "onCardAppeared: Card Appear!")
+        Log.d("TOP POISITON: ", manager.topPosition.toString())
+        Log.d("Adapter ItemCount: ", adapter.itemCount.toString())
+        if (manager.topPosition == (adapter.itemCount - 3) ) {
+            paginate()
+        }
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {

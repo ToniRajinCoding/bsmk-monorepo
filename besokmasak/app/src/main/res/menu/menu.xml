@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navSearch"
             android:icon="@drawable/search"
-            android:title="search"/>
+            android:title="search"
+            />
+
         <item android:id="@+id/navFavorite"
             android:icon="@drawable/favorite"
-            android:title="favorite"/>
+            android:title="favorite"
+            />
     </group>
 </menu>

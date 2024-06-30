@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -36,7 +37,7 @@ class RecipeResultViewModel @Inject constructor(
 
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)
-            recipesFlow.collect{resource ->
+            recipesFlow.collectLatest{resource ->
                 _recipesLiveData.postValue(resource)
             }
         }

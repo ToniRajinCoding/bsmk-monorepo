@@ -28,12 +28,12 @@ class RecipeResultAdapter(
                 Log.d("isi dari recipes, recipe name: ", data.recipe_name)
                 val instructionAdapter = InstructionAdapter(data.instructions)
                 val ingredientAdapter = IngredientAdapter(data.ingredients)
-                tvTitle.text = data.recipe_name
+                tvRecipeName.text = data.recipe_name
                 rvInstructions.adapter = instructionAdapter
                 rvInstructions.layoutManager = LinearLayoutManager(itemView.context)
                 rvIngredients.adapter = ingredientAdapter
                 rvIngredients.layoutManager = LinearLayoutManager(itemView.context)
-                fabFavorite.setOnClickListener {
+                favBtn.setOnClickListener {
                     viewmodel.updateFavoriteState(data, !data.isFavorited)
                     val message = if (data.isFavorited) "you unfavorited this recipe" else "you favorited this recipe"
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
@@ -71,7 +71,7 @@ class RecipeResultAdapter(
 
     fun generateRecipeList(recipeList: List<Recipes>){
         listRecipe.addAll(recipeList)
-        notifyItemRangeChanged(itemCount,recipeList.size)
+        notifyItemRangeInserted(itemCount,recipeList.size)
 //        listRecipe.addAll(recipeList)
 //        notifyDataSetChanged()
     }

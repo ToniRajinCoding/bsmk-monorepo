@@ -24,8 +24,6 @@ class FavoriteActivity : AppCompatActivity() {
 
         val data = intent.getParcelableExtra("recipes", Recipes::class.java)
 
-        Log.d("LOGGING", data.toString())
-
         if (data != null) {
             ingredientAdapter = IngredientAdapter(data.ingredients)
             instructionAdapter = InstructionAdapter(data.instructions)

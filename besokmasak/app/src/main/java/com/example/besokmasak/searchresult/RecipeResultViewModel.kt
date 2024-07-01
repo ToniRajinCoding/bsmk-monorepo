@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,9 +28,8 @@ class RecipeResultViewModel @Inject constructor(
     private val viewModelScope : CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 ) : ViewModel() {
 
-    private val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
+    val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
     val recipesLiveData : LiveData<Resource<List<Recipes>>> = _recipesLiveData
-
 
     fun searchQuery(ingredients: String, method: String){
         Log.d("Search Query","Search Query Dijalankan")
@@ -37,6 +37,7 @@ class RecipeResultViewModel @Inject constructor(
 
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)
+            delay(3000)
             recipesFlow.collectLatest{resource ->
                 _recipesLiveData.postValue(resource)
             }

@@ -52,9 +52,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:hint="chicken, potato, mushroom.."
+                android:drawableStart="@drawable/baseline_fastfood_24"
+                android:hint="  chicken, potato, mushroom"
+                android:textColor="@color/dark_teal"
                 android:padding="16dp"
                 android:textStyle="italic"/>
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,8 +78,10 @@
                 android:id="@+id/etMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="steamed / baked / fried"
+                android:drawableStart="@drawable/baseline_local_fire_department_24"
+                android:hint="  steamed / baked / fried"
                 android:padding="16dp"
+                android:textColor="@color/dark_teal"
                 android:textSize="14sp"
                 android:textStyle="italic" />
 

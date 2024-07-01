@@ -19,6 +19,7 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
@@ -58,6 +59,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                         adapter = RecipeResultAdapter(viewModel)
                         adapter.setRecipeList(recipes)
                         binding.csvRecipeDetail.adapter = adapter
+                        viewModel._recipesLiveData.postValue(null)
                     }
                     is Resource.Loading -> {
                         //show loading indicator
@@ -114,9 +116,11 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                         when(resource){
                             is Resource.Success -> {
                                 Log.d("PAGINATE", "PAGINATE SUCCESS")
+                                binding.loadingBar.visibility = View.INVISIBLE
                                 binding.csvRecipeDetail.post {
                                     adapter.generateRecipeList(resource.data!!)
                                 }
+
                             }
                             is Resource.Loading -> {
                                 Log.d("PAGINATE", "PAGINATE LOADING")
@@ -151,15 +155,21 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardAppeared(view: View?, position: Int) {
         Log.d("CardStackView", "onCardAppeared: Card Appear!")
-        Log.d("TOP POISITON: ", manager.topPosition.toString())
-        Log.d("Adapter ItemCount: ", adapter.itemCount.toString())
-        if (manager.topPosition == (adapter.itemCount - 3) ) {
-            paginate()
-        }
+
+
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
         Log.d("CardStackView", "onCardDisappeared: Card Dissapear!")
+        Log.d("TOP POISITON: ", manager.topPosition.toString())
+        Log.d("Adapter ItemCount: ", adapter.itemCount.toString())
+
+        if ((manager.topPosition) == (adapter.itemCount - 3)) {
+            Log.d("SYUDA", "reached the pagination index")
+            paginate()
+        }
+
+        if( (manager.topPosition+1) % 10 == 0) binding.loadingBar.visibility = View.VISIBLE
     }
 
 

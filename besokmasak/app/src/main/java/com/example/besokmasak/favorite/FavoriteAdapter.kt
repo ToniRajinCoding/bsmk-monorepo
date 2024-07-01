@@ -25,9 +25,9 @@ class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val cont
                     intent.putExtra("recipes", data)
                     context.startActivity(intent)
                 }
-                btnFavorite.setOnClickListener {
+                favBtn.setOnClickListener {
                     viewmodel.updateFavoriteState(data,data.isFavorited)
-                    val message = if (data.isFavorited) "you unfavorited this recipe" else "you favorited this recipe"
+                    val message = if (data.isFavorited) "you unfavorited this recipe" else "you have favorited this recipe!"
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
                     snackbar.show()
                 }

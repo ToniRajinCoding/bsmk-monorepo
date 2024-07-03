@@ -29,5 +29,5 @@
 
 # Specific files based on needs
 # Add any other files or folders you want to exclude here
-example.txt
-another_file.js
+deployment.yaml
+service.yaml

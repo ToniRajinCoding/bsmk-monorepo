@@ -19,16 +19,29 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="placeholder" />
 
-    <ImageButton
+<!--    <ImageButton-->
+<!--        android:id="@+id/favBtn"-->
+<!--        android:layout_width="45dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--        android:src="@drawable/favorite"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.varunest.sparkbutton.SparkButton
         android:id="@+id/favBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginRight="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/favorite"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:sparkbutton_iconSize="24dp"
+        app:sparkbutton_inActiveImage="@drawable/favorite"
+        app:sparkbutton_primaryColor="@color/teal"
+        app:sparkbutton_secondaryColor="@color/darker_teal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

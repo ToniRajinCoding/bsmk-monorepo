@@ -14,6 +14,7 @@ import com.example.besokmasak.ui.IngredientAdapter
 import com.example.besokmasak.ui.InstructionAdapter
 import com.example.besokmasak.utils.RecipeDiffCallBack
 import com.google.android.material.snackbar.Snackbar
+import com.varunest.sparkbutton.SparkEventListener
 
 class RecipeResultAdapter(
     private val viewmodel: RecipeResultViewModel
@@ -33,11 +34,21 @@ class RecipeResultAdapter(
                 rvInstructions.layoutManager = LinearLayoutManager(itemView.context)
                 rvIngredients.adapter = ingredientAdapter
                 rvIngredients.layoutManager = LinearLayoutManager(itemView.context)
+                var counter = 0
                 favBtn.setOnClickListener {
-                    viewmodel.updateFavoriteState(data, !data.isFavorited)
-                    val message = if (data.isFavorited) "you unfavorited this recipe" else "you favorited this recipe"
+                    Log.d("favBtn clicked", "fav btn clicked! yay")
+
+                    val isFavorited = counter % 2 == 0
+                    val message = if (isFavorited) "You add this recipe to favorite" else "You removed this recipe from favorites"
+                    viewmodel.updateFavoriteState(data,isFavorited)
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
-                    snackbar.show()
+                    with(snackbar){
+                        setBackgroundTint(context.getColor(R.color.darker_teal))
+                        setTextColor(context.getColor(R.color.white))
+                        snackbar.show()
+                    }
+                    counter++
+
                 }
             }
         }

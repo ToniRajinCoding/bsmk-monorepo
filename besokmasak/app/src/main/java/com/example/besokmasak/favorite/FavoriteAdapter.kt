@@ -2,6 +2,7 @@ package com.example.besokmasak.favorite
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +27,15 @@ class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val cont
                     context.startActivity(intent)
                 }
                 favBtn.setOnClickListener {
-                    viewmodel.updateFavoriteState(data,data.isFavorited)
-                    val message = if (data.isFavorited) "you unfavorited this recipe" else "you have favorited this recipe!"
+                    viewmodel.updateFavoriteState(data,false)
+                    val message = "you unfavorited this recipe"
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
-                    snackbar.show()
+                    with(snackbar){
+                        setBackgroundTint(context.getColor(R.color.darker_teal))
+                        setTextColor(context.getColor(R.color.white))
+                        show()
+                    }
+
                 }
             }
         }

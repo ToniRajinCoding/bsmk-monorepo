@@ -50,6 +50,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.activity:activity-ktx:1.9.0")
     implementation("androidx.activity:activity:1.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -82,5 +83,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0-RC")
 
     implementation("com.github.ybq:Android-SpinKit:1.4.0")
+
+    implementation("com.github.varunest:sparkbutton:1.0.6")
 
 }

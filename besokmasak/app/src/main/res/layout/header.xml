@@ -4,14 +4,14 @@
     android:layout_height="200dp"
     android:padding="20dp"
     android:orientation="vertical"
-    android:background="@color/design_default_color_primary_variant"
+    android:background="@color/dark_teal"
     android:gravity="bottom"
     >
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="adasdasdas"
+        android:text="Besok Masak"
         android:textSize="39sp"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="adasdasdas"
+        android:text="your AI recipe inspiration"
         android:textSize="20sp"
         android:textColor="@color/white"
         />

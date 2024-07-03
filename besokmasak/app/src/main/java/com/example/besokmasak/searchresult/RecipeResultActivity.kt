@@ -155,8 +155,6 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardAppeared(view: View?, position: Int) {
         Log.d("CardStackView", "onCardAppeared: Card Appear!")
-
-
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {

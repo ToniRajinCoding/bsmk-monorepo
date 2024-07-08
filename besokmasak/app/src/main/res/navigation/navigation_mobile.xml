@@ -8,14 +8,14 @@
     <fragment
         android:id="@+id/navSearch"
         android:name="com.example.besokmasak.search.SearchFragment"
-        android:label="menu_search"
+        android:label="Find Recipes"
         tools:layout="@layout/fragment_search">
     </fragment>
 
     <fragment
         android:id="@+id/navFavorite"
         android:name="com.example.besokmasak.favorite.FavoriteFragment"
-        android:label="menu_fav"
+        android:label="Favorite Recipes"
         tools:layout="@layout/fragment_favorite">
 
     </fragment>

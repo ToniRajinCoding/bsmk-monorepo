@@ -28,6 +28,7 @@
             <!--        <item name="colorOnSecondary">@color/black</item>-->
             <!-- Status bar color. -->
             <item name="android:statusBarColor">@color/darker_teal</item>
+            <item name="android:fontFamily">@font/ws_regular</item>
             <!-- Customize your theme here. -->
         </style>
 

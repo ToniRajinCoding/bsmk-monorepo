@@ -80,7 +80,7 @@ class RecipeResultAdapter(
         notifyDataSetChanged()
     }
 
-    fun generateRecipeList(recipeList: List<Recipes>){
+    fun generateMoreRecipeList(recipeList: List<Recipes>){
         listRecipe.addAll(recipeList)
         notifyItemRangeInserted(itemCount,recipeList.size)
 //        listRecipe.addAll(recipeList)

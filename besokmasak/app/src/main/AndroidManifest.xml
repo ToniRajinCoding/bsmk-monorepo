@@ -17,8 +17,13 @@
         android:theme="@style/Theme.BesokMasak"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9571606876604535~1387852569"/>
+
         <activity
-            android:name=".ui.TestingActivity"
+            android:name=".testing.TestingActivity"
             android:exported="true">
         </activity>
         <activity

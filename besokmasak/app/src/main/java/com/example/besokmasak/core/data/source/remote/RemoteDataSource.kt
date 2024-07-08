@@ -29,9 +29,10 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
 //    }
 
     fun searchQuery(recipeRequest: RecipeRequest) : Flow<ApiResponse<List<Recipe>>> {
-
         return flow {
             try{
+                Log.d("Ingredients yang di POST: ", recipeRequest.ingredients)
+                Log.d("method yang di POST: ", recipeRequest.ingredients)
                 val response = apiService.createQuery(recipeRequest)
                 val recipes = response.recipes
                 if(recipes.isNotEmpty()){
@@ -44,7 +45,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
                 Log.e("RemoteDataSource Error: ", e.toString())
             }
         }.flowOn(Dispatchers.IO)
-
 
 
 //        val call = apiService.createQuery(recipeRequest)

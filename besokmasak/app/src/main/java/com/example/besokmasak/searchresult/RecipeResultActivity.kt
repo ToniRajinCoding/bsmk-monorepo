@@ -11,6 +11,12 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -28,44 +34,87 @@ import okhttp3.Dispatcher
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private lateinit var binding: ActivityRecipeResultBinding
-
+    private var isEnded : Boolean = false
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    // private val adapter by lazy { RecipeResultAdapter(collectRecipe(), LayoutInflater.from(this)) }
-    private val viewModel : RecipeResultViewModel by viewModels()
+    private var mInterstitialAd: InterstitialAd? = null
+    private val viewModel: RecipeResultViewModel by viewModels()
     private lateinit var adapter: RecipeResultAdapter
+    private val adRequest by lazy { AdRequest.Builder().build() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //get intent string from search
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
         Log.d("ingredient method logging : ", "$ingredients & $method")
 
+
+        //setup ads
+//        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("TAGGGG", adError.toString())
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d("TAGGGGG", "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+        })
+
+        //show ads when user reached the view
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(this)
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+        }
+
+
+        //initialize the cardStackView
         initialize()
 
+        //set adapter and pagination
         adapter = RecipeResultAdapter(viewModel)
+        var paginationCounter = viewModel._paginationCounter.value?.plus(1) ?: 1
 
         //if the intent passed successfully
-        if(ingredients != null && method != null){
-            viewModel.searchQuery(ingredients,method)
+        if (ingredients != null && method != null) {
+            viewModel.searchQuery(ingredients, method)
             viewModel.recipesLiveData.observe(this) { resource ->
                 when (resource) {
                     is Resource.Success -> {
                         binding.loadingBar.visibility = View.INVISIBLE
                         binding.csvRecipeDetail.visibility = View.VISIBLE
+
                         val recipes = resource.data!!
-                        adapter = RecipeResultAdapter(viewModel)
-                        adapter.setRecipeList(recipes)
-                        binding.csvRecipeDetail.adapter = adapter
-                        viewModel._recipesLiveData.postValue(null)
+
+                        //check if its a initial cardStackView or just paginating
+                        if(paginationCounter > 1){
+                            //Pagination
+                            binding.csvRecipeDetail.post{
+                                adapter.generateMoreRecipeList(recipes)
+                            }
+                        }else{
+                            //initialize CardStack View
+                            adapter = RecipeResultAdapter(viewModel)
+                            adapter.setRecipeList(recipes)
+                            binding.csvRecipeDetail.adapter = adapter
+                            paginationCounter += 1
+                        }
+
                     }
+
                     is Resource.Loading -> {
                         //show loading indicator
+                        Log.d("LODENG", "Resource Loading Running!")
                         binding.loadingBar.visibility = View.VISIBLE
-                        binding.csvRecipeDetail.visibility = View.INVISIBLE
+                        binding.csvRecipeDetail.visibility = View.VISIBLE
                     }
+
                     is Resource.Error -> {
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
                     }
@@ -73,11 +122,9 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
             }
         }
 
-
     }
 
     private fun initialize() {
-
         manager.setStackFrom(StackFrom.None)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
@@ -93,49 +140,20 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         binding.csvRecipeDetail.layoutManager = manager
 
         binding.csvRecipeDetail.itemAnimator.apply {
-            if (this is DefaultItemAnimator){
+            if (this is DefaultItemAnimator) {
                 supportsChangeAnimations = false
             }
         }
     }
 
-    private fun paginate(){
-        val scope = CoroutineScope(Dispatchers.IO)
-
+    private fun paginate() {
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
-
-        if (ingredients != null && method != null){
-
-            Log.d("Paginate", "Paginate DI jalankan")
-
-            scope.launch {
-                viewModel.searchQuery(ingredients,method)
-                withContext(Dispatchers.Main){
-                    viewModel.recipesLiveData.observe(this@RecipeResultActivity) {resource ->
-                        when(resource){
-                            is Resource.Success -> {
-                                Log.d("PAGINATE", "PAGINATE SUCCESS")
-                                binding.loadingBar.visibility = View.INVISIBLE
-                                binding.csvRecipeDetail.post {
-                                    adapter.generateRecipeList(resource.data!!)
-                                }
-
-                            }
-                            is Resource.Loading -> {
-                                Log.d("PAGINATE", "PAGINATE LOADING")
-                            }
-                            is Resource.Error -> {
-                                Log.d("error generating new recipes PAGINATE", resource.message ?: "error")
-                            }
-                        }
-                    }
-                }
-            }
-
+        if (ingredients != null && method != null) {
+            viewModel._recipesLiveData.postValue(Resource.Loading())
+            viewModel.searchQuery(ingredients, method)
         }
     }
-
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: Card Dragged!")
@@ -158,16 +176,22 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
-        Log.d("CardStackView", "onCardDisappeared: Card Dissapear!")
-        Log.d("TOP POISITON: ", manager.topPosition.toString())
-        Log.d("Adapter ItemCount: ", adapter.itemCount.toString())
-
-        if ((manager.topPosition) == (adapter.itemCount - 3)) {
-            Log.d("SYUDA", "reached the pagination index")
-            paginate()
+        if ((manager.topPosition+1) == adapter.itemCount) {
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(this)
+                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                    override fun onAdDismissedFullScreenContent() {
+                        // Called when ad is dismissed.
+                        Log.d("TAG", "Ad dismissed fullscreen content.")
+                        mInterstitialAd = null
+                        paginate()
+                    }
+                }
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+            }
         }
 
-        if( (manager.topPosition+1) % 10 == 0) binding.loadingBar.visibility = View.VISIBLE
     }
 
 

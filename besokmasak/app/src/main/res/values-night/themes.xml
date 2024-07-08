@@ -29,6 +29,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darker_teal</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/ws_regular</item>
     </style>
 
 </resources>

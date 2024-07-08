@@ -1,17 +1,7 @@
 package com.example.besokmasak.search
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -19,16 +9,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.ActivitySearchBinding
-import com.example.besokmasak.favorite.FavoriteActivity
-import com.example.besokmasak.searchresult.RecipeResultActivity
-import com.google.android.material.navigation.NavigationView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
+//    private var mInterstitialAd : InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +30,10 @@ class SearchActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        //set Toolbar
         setSupportActionBar(binding.appBarMain.toolbar)
 
+        //set navigation at navigation Drawer
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         appBarConfiguration =
@@ -45,16 +41,13 @@ class SearchActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
 
+        //initialize ads
+        val backgroundScope = CoroutineScope(Dispatchers.IO)
+        backgroundScope.launch {
+            // Initialize the Google Mobile Ads SDK on a background thread.
+            MobileAds.initialize(this@SearchActivity)
+        }
 
-//        val ingredients = binding.etMaterial.text.toString()
-//        val method = binding.etMasakType.text.toString()
-//        val intent = Intent(applicationContext, RecipeResultActivity::class.java)
-//
-//        binding.btnSubmit.setOnClickListener {
-//            intent.putExtra("ingredients", ingredients)
-//            intent.putExtra("method", method)
-//            startActivity(intent)
-//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

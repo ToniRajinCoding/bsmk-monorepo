@@ -28,20 +28,24 @@ class RecipeResultViewModel @Inject constructor(
     private val viewModelScope : CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 ) : ViewModel() {
 
+    val _paginationCounter = MutableLiveData<Int>()
+    val paginationCounter : LiveData<Int> = _paginationCounter
+
     val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
     val recipesLiveData : LiveData<Resource<List<Recipes>>> = _recipesLiveData
 
     fun searchQuery(ingredients: String, method: String){
         Log.d("Search Query","Search Query Dijalankan")
+
         val recipeRequest = RecipeRequest(ingredients = ingredients, method = method)
 
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)
-            delay(3000)
-            recipesFlow.collectLatest{resource ->
+            recipesFlow.collect{resource ->
                 _recipesLiveData.postValue(resource)
             }
         }
+
     }
 
     fun updateFavoriteState(recipe:Recipes, state: Boolean){

@@ -86,4 +86,6 @@ dependencies {
 
     implementation("com.github.varunest:sparkbutton:1.0.6")
 
+    implementation("com.google.android.gms:play-services-ads:23.2.0")
+
 }

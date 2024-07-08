@@ -30,15 +30,15 @@ async function getRecipe(ingredients, method) {
   return completion.choices[0].message.content;
 }
 
-async function getRecipeImage() {
-  const response = await openai.images.generate({
-    model: "dall-e-3",
-    prompt: "a white siamese cat",
-    n: 1,
-    size: "1024x1024",
-  });
-  image_url = response.data[0].url;
-}
+// async function getRecipeImage() {
+//   const response = await openai.images.generate({
+//     model: "dall-e-3",
+//     prompt: "a white siamese cat",
+//     n: 1,
+//     size: "1024x1024",
+//   });
+//   image_url = response.data[0].url;
+// }
 
 function generateDummyRecipe() {
   const recipes = {
@@ -319,17 +319,17 @@ function generateDummyRecipe() {
   return recipes;
 }
 
-// app.post("/get-recipe", async (req, res) => {
-//   try {
-//     const { ingredients, method } = req.body;
-//     const recipe = await getRecipe(ingredients, method);
-//     console.log(recipe);
-//     res.send(recipe);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Error generating recipe");
-//   }
-// });
+app.post("/get-recipe", async (req, res) => {
+  try {
+    const { ingredients, method } = req.body;
+    const recipe = await getRecipe(ingredients, method);
+    console.log(recipe);
+    res.send(recipe);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error generating recipe");
+  }
+});
 
 app.post("/get-dummy-recipe", (req, res) => {
   try {

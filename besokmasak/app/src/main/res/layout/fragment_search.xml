@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/cream"
         >
 
         <ImageView
@@ -21,83 +21,113 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_brown"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="24dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:text="Let's start deciding what to cook tomorrow"
-            android:textColor="@color/darker_teal"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            android:background="@color/white"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:elevation="16dp"
+            app:cardCornerRadius="16dp"
+            >
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/darker_teal"
-            android:padding="16dp"
-            app:helperText="Input your ingredients"
-            app:helperTextTextColor="@color/dark_teal"
-            app:boxStrokeColor="@color/darker_teal"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etIngredients"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:drawableStart="@drawable/baseline_fastfood_24"
-                android:hint="  chicken, potato, mushroom"
-                android:textColor="@color/dark_teal"
-                android:padding="16dp"
-                android:textStyle="italic"/>
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingBottom="24dp"
+                >
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="24dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="Let's start deciding what to cook tomorrow"
+                    android:textColor="#2F3645"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/ws_semibold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/darker_teal"
+                    android:padding="16dp"
+                    app:helperText="Input your ingredients"
+                    app:helperTextTextColor="@color/dark_teal"
+                    app:boxStrokeColor="@color/darker_teal"
+                    app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:hint="chicken, potato, mushroom"
+                        android:textColor="@color/dark_teal"
+                        android:padding="16dp" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColorHint="@color/darker_teal"
-            app:helperText="Input cooking method"
-            app:helperTextTextColor="@color/dark_teal"
-            app:boxStrokeColor="@color/darker_teal"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textColorHint="@color/darker_teal"
+                    app:helperText="Input cooking method"
+                    app:helperTextTextColor="@color/dark_teal"
+                    app:boxStrokeColor="@color/darker_teal"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMethod"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_local_fire_department_24"
-                android:hint="  steamed / baked / fried"
-                android:padding="16dp"
-                android:textColor="@color/dark_teal"
-                android:textSize="14sp"
-                android:textStyle="italic" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="steamed / baked / fried"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_teal"
+                        android:textSize="14sp"
+                        />
 
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Find recipe"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Find recipe"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

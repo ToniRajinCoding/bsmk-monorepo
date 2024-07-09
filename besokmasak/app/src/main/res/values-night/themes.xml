@@ -15,21 +15,35 @@
 <!--    </style>-->
 <!--</resources>-->
 
+<!--<resources xmlns:tools="http://schemas.android.com/tools">-->
+<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
+<!--    <style name="Theme.BesokMasak" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/dark_teal</item>-->
+<!--        <item name="colorPrimaryVariant">@color/darker_teal</item>-->
+
+<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+<!--        <item name="colorSecondary">@color/light_teal</item>-->
+<!--        <item name="colorSecondaryVariant">@color/teal</item>-->
+<!--        &lt;!&ndash;        <item name="colorOnSecondary">@color/black</item>&ndash;&gt;-->
+<!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
+<!--        <item name="android:statusBarColor">@color/darker_teal</item>-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="android:fontFamily">@font/ws_regular</item>-->
+<!--    </style>-->
+
+<!--</resources>-->
+
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.BesokMasak" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_teal</item>
-        <item name="colorPrimaryVariant">@color/darker_teal</item>
+        <item name="colorPrimary">@color/dark_brown</item>
 
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/light_teal</item>
-        <item name="colorSecondaryVariant">@color/teal</item>
-        <!--        <item name="colorOnSecondary">@color/black</item>-->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darker_teal</item>
-        <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/ws_regular</item>
+        <!-- Customize your theme here. -->
     </style>
 
 </resources>

@@ -22,7 +22,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
     private var mInterstitialAd: InterstitialAd? = null
-
+    private val adRequest by lazy { AdRequest.Builder().build() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,22 +31,11 @@ class SearchFragment : Fragment() {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         val intent = Intent(requireActivity().applicationContext, RecipeResultActivity::class.java)
-        val adRequest = AdRequest.Builder().build()
 
-
-        //Load Ads
-        InterstitialAd.load(requireContext(),"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mInterstitialAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-            }
-        })
-
+        loadAds()
 
         binding.btnSubmit.setOnClickListener {
+
             with(binding) {
                 val ingredients = binding.etIngredients.text.toString()
                 val method = binding.etMethod.text.toString()
@@ -59,19 +48,22 @@ class SearchFragment : Fragment() {
                         show()
                     }
                 } else {
-                    if(mInterstitialAd!= null){
+                    if (mInterstitialAd != null) {
+                        //Load Ads
                         mInterstitialAd?.show(requireActivity())
                         //Set Ads Callback
-                        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                // Called when ad is dismissed.
-                                Log.d("TAG", "Ad dismissed fullscreen content.")
-                                mInterstitialAd = null
-                                intent.putExtra("ingredients", ingredients)
-                                intent.putExtra("method", method)
-                                startActivity(intent)
+                        mInterstitialAd?.fullScreenContentCallback =
+                            object : FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    // Called when ad is dismissed.
+                                    Log.d("TAG", "Ad dismissed fullscreen content.")
+                                    mInterstitialAd = null
+                                    loadAds()
+                                    intent.putExtra("ingredients", ingredients)
+                                    intent.putExtra("method", method)
+                                    startActivity(intent)
+                                }
                             }
-                        }
                     } else {
                         Log.d("TAG", "The Ads wasn't ready yet")
                     }
@@ -81,5 +73,22 @@ class SearchFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun loadAds(){
+        InterstitialAd.load(
+            requireContext(),
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    mInterstitialAd = null
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                }
+            })
+    }
+
 
 }

@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="8dp"
             app:cardCornerRadius="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgRecipe"
@@ -51,23 +52,9 @@
                     android:text="Recipe Name"
                     android:textColor="@color/black"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toStartOf="@+id/favBtn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <com.varunest.sparkbutton.SparkButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:sparkbutton_iconSize="32dp"
-                    app:sparkbutton_inActiveImage="@drawable/favorite"
-                    app:sparkbutton_primaryColor="@color/teal"
-                    app:sparkbutton_secondaryColor="@color/darker_teal" />
 
                 <TextView
                     android:id="@+id/tvIngredients"
@@ -89,9 +76,7 @@
                     android:layout_margin="16dp"
                     android:overScrollMode="never"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
-
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
 
 
                 <TextView
@@ -106,20 +91,6 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rvIngredients" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:fontFamily="@font/ws_light"
-                    android:text="Swipe left or right to see next recipe"
-                    android:textColor="@color/navy_blue"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rvInstructions" />
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvInstructions"

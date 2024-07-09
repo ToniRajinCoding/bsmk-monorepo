@@ -19,14 +19,10 @@
         <!-- Base application theme. -->
         <style name="Theme.BesokMasak" parent="Theme.MaterialComponents.DayNight.NoActionBar">
             <!-- Primary brand color. -->
-            <item name="colorPrimary">@color/dark_teal</item>
-            <item name="colorPrimaryVariant">@color/darker_teal</item>
+            <item name="colorPrimary">@color/dark_brown</item>
 
-            <!-- Secondary brand color. -->
-            <item name="colorSecondary">@color/light_teal</item>
-            <item name="colorSecondaryVariant">@color/teal</item>
-            <!--        <item name="colorOnSecondary">@color/black</item>-->
             <!-- Status bar color. -->
+            <item name="sparkbutton_primaryColor">@color/light_green</item>
             <item name="android:statusBarColor">@color/darker_teal</item>
             <item name="android:fontFamily">@font/ws_regular</item>
             <!-- Customize your theme here. -->

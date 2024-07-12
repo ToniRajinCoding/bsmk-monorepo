@@ -9,7 +9,7 @@ import java.util.concurrent.Flow
 
 interface ApiService {
 
-    @POST("/get-dummy-recipe")
+    @POST("/get-recipe")
     suspend fun createQuery(
         @Body requestBody: RecipeRequest
     ) : RecipeResponse

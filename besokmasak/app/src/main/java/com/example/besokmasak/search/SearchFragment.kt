@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.FragmentSearchBinding
 import com.example.besokmasak.searchresult.RecipeResultActivity
+import com.example.besokmasak.utils.AdmobManager
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -17,12 +18,16 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
+    @Inject lateinit var admobManager: AdmobManager
     private lateinit var binding: FragmentSearchBinding
-    private var mInterstitialAd: InterstitialAd? = null
-    private val adRequest by lazy { AdRequest.Builder().build() }
+//    private var mInterstitialAd: InterstitialAd? = null
+//    private val adRequest by lazy { AdRequest.Builder().build() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +37,11 @@ class SearchFragment : Fragment() {
 
         val intent = Intent(requireActivity().applicationContext, RecipeResultActivity::class.java)
 
-        loadAds()
+        admobManager.loadAds()
 
         binding.btnSubmit.setOnClickListener {
+
+            var mInterstitialAd = admobManager.getInterstitialAd()
 
             with(binding) {
                 val ingredients = binding.etIngredients.text.toString()
@@ -58,7 +65,7 @@ class SearchFragment : Fragment() {
                                     // Called when ad is dismissed.
                                     Log.d("TAG", "Ad dismissed fullscreen content.")
                                     mInterstitialAd = null
-                                    loadAds()
+                                    admobManager.loadAds()
                                     intent.putExtra("ingredients", ingredients)
                                     intent.putExtra("method", method)
                                     startActivity(intent)
@@ -70,25 +77,24 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-
         return binding.root
     }
 
-    private fun loadAds(){
-        InterstitialAd.load(
-            requireContext(),
-            "ca-app-pub-3940256099942544/1033173712",
-            adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    mInterstitialAd = null
-                }
-
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
-                }
-            })
-    }
+//    private fun loadAds(){
+//        InterstitialAd.load(
+//            requireContext(),
+//            "ca-app-pub-3940256099942544/1033173712",
+//            adRequest,
+//            object : InterstitialAdLoadCallback() {
+//                override fun onAdFailedToLoad(adError: LoadAdError) {
+//                    mInterstitialAd = null
+//                }
+//
+//                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                    mInterstitialAd = interstitialAd
+//                }
+//            })
+//    }
 
 
 }

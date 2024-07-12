@@ -42,11 +42,11 @@ class SearchActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
 
         //initialize ads
-        val backgroundScope = CoroutineScope(Dispatchers.IO)
-        backgroundScope.launch {
-            // Initialize the Google Mobile Ads SDK on a background thread.
-            MobileAds.initialize(this@SearchActivity)
-        }
+//        val backgroundScope = CoroutineScope(Dispatchers.IO)
+//        backgroundScope.launch {
+//            // Initialize the Google Mobile Ads SDK on a background thread.
+//            MobileAds.initialize(this@SearchActivity)
+//        }
 
     }
 

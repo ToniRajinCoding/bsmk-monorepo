@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
+import com.example.besokmasak.utils.AdmobManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -29,17 +30,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
+    @Inject lateinit var admobManager: AdmobManager
     private lateinit var binding: ActivityRecipeResultBinding
-    private var isEnded : Boolean = false
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    private var mInterstitialAd: InterstitialAd? = null
+
     private val viewModel: RecipeResultViewModel by viewModels()
     private lateinit var adapter: RecipeResultAdapter
-    private val adRequest by lazy { AdRequest.Builder().build() }
+    //private val adRequest by lazy { AdRequest.Builder().build() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,25 +55,26 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
 
         //setup ads
+        admobManager.loadAds()
 //        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("TAGGGG", adError.toString())
-                mInterstitialAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.d("TAGGGGG", "Ad was loaded.")
-                mInterstitialAd = interstitialAd
-            }
-        })
+//        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+//            override fun onAdFailedToLoad(adError: LoadAdError) {
+//                Log.d("TAGGGG", adError.toString())
+//                mInterstitialAd = null
+//            }
+//
+//            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                Log.d("TAGGGGG", "Ad was loaded.")
+//                mInterstitialAd = interstitialAd
+//            }
+//        })
 
         //show ads when user reached the view
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(this)
-        } else {
-            Log.d("TAG", "The interstitial ad wasn't ready yet.")
-        }
+//        if (mInterstitialAd != null) {
+//            mInterstitialAd?.show(this)
+//        } else {
+//            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+//        }
 
 
         //initialize the cardStackView
@@ -176,14 +179,16 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
+        var mInterstitialAd : InterstitialAd? = admobManager.getInterstitialAd()
         if ((manager.topPosition+1) == adapter.itemCount) {
             if (mInterstitialAd != null) {
-                mInterstitialAd?.show(this)
-                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                mInterstitialAd.show(this)
+                mInterstitialAd.fullScreenContentCallback = object: FullScreenContentCallback() {
                     override fun onAdDismissedFullScreenContent() {
                         // Called when ad is dismissed.
                         Log.d("TAG", "Ad dismissed fullscreen content.")
                         mInterstitialAd = null
+                        admobManager.loadAds()
                         paginate()
                     }
                 }

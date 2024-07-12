@@ -19,7 +19,7 @@
 *.log
 
 # Environment variables
-/env
+.env
 
 # Additional extensions
 *.pem

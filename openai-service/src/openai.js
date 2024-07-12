@@ -3,9 +3,9 @@ import OpenAI from "openai";
 import express from "express";
 import bodyParser from "body-parser";
 
+dotenv.config({ override: true, debug: true });
 const app = express();
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
-dotenv.config();
 app.use(bodyParser.json());
 
 async function getRecipe(ingredients, method) {
@@ -13,15 +13,16 @@ async function getRecipe(ingredients, method) {
     messages: [
       {
         role: "system",
-        content: `You are a indonesian house chef. 
+        content: `You are a indonesian cuisine chef. 
         Generate answer with JSON format structured {recipes: [{object}, {object}, {object}, ...]}
-        each object will have these attributes: recipe_name (string), ingredients (array), and instructions (array).
+        each object will have these attributes: recipe_name (string), ingredients (array of ingredients), and instructions (array of instructions).
+        Put ingredients quantity information at each ingredients item.
         Do not change the JSON attribute name: recipe_name, ingredients, instructions.
         `,
       },
       {
         role: "user",
-        content: `Please give me 10 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
+        content: `Please give me 5 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
       },
     ],
     model: "gpt-3.5-turbo",
@@ -321,6 +322,7 @@ function generateDummyRecipe() {
 
 app.post("/get-recipe", async (req, res) => {
   try {
+    console.log(process.env.OPENAI_API_KEY);
     const { ingredients, method } = req.body;
     const recipe = await getRecipe(ingredients, method);
     console.log(recipe);

@@ -1,41 +1,30 @@
 package com.example.besokmasak.searchresult
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.utils.AdmobManager
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
-    @Inject lateinit var admobManager: AdmobManager
+    @Inject
+    lateinit var admobManager: AdmobManager
     private lateinit var binding: ActivityRecipeResultBinding
     private val manager by lazy { CardStackLayoutManager(this, this) }
 
@@ -52,7 +41,6 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         val ingredients = intent.getStringExtra("ingredients")
         val method = intent.getStringExtra("method")
         Log.d("ingredient method logging : ", "$ingredients & $method")
-
 
         //setup ads
         admobManager.loadAds()
@@ -92,23 +80,23 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                     is Resource.Success -> {
                         binding.loadingBar.visibility = View.INVISIBLE
                         binding.csvRecipeDetail.visibility = View.VISIBLE
+                        binding.tvTips.visibility = View.INVISIBLE
 
                         val recipes = resource.data!!
 
                         //check if its a initial cardStackView or just paginating
-                        if(paginationCounter > 1){
+                        if (paginationCounter > 1) {
                             //Pagination
-                            binding.csvRecipeDetail.post{
+                            binding.csvRecipeDetail.post {
                                 adapter.generateMoreRecipeList(recipes)
                             }
-                        }else{
+                        } else {
                             //initialize CardStack View
                             adapter = RecipeResultAdapter(viewModel)
                             adapter.setRecipeList(recipes)
                             binding.csvRecipeDetail.adapter = adapter
                             paginationCounter += 1
                         }
-
                     }
 
                     is Resource.Loading -> {
@@ -116,9 +104,17 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
                         Log.d("LODENG", "Resource Loading Running!")
                         binding.loadingBar.visibility = View.VISIBLE
                         binding.csvRecipeDetail.visibility = View.VISIBLE
+                        binding.tvTips.visibility = View.VISIBLE
                     }
 
                     is Resource.Error -> {
+                        with(binding.tvTips) {
+                            text = "There's a problem generating recipe, please try again. " +
+                                    "\nIf issue persist, please contact tonirajincoding@gmail.com"
+                            visibility = View.VISIBLE
+                        }
+                        binding.loadingBar.visibility = View.INVISIBLE
+
                         Log.e("Error dalam resource", resource.message ?: "error dalam resource")
                     }
                 }
@@ -179,11 +175,14 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
-        var mInterstitialAd : InterstitialAd? = admobManager.getInterstitialAd()
-        if ((manager.topPosition+1) == adapter.itemCount) {
+        Log.d("posisi item : ", manager.topPosition.toString())
+        Log.d("jumlah item yg di generate : ", adapter.itemCount.toString())
+
+        var mInterstitialAd: InterstitialAd? = admobManager.getInterstitialAd()
+        if ((manager.topPosition + 1) == adapter.itemCount) {
             if (mInterstitialAd != null) {
                 mInterstitialAd.show(this)
-                mInterstitialAd.fullScreenContentCallback = object: FullScreenContentCallback() {
+                mInterstitialAd.fullScreenContentCallback = object : FullScreenContentCallback() {
                     override fun onAdDismissedFullScreenContent() {
                         // Called when ad is dismissed.
                         Log.d("TAG", "Ad dismissed fullscreen content.")

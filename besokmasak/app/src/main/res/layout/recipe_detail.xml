@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:fillViewport="true"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +17,8 @@
 
         <ImageView
             android:id="@+id/imgRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="2100dp"
+            android:layout_height="183dp"
             android:layout_margin="40dp"
             android:src="@drawable/cooking_img_yellow"
             app:layout_constraintEnd_toEndOf="parent"

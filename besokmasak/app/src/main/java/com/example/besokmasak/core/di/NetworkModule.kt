@@ -28,7 +28,7 @@ class NetworkModule {
     @Singleton
     fun provideApiService(client: OkHttpClient) : ApiService {
         val retrofit = Retrofit.Builder().
-            baseUrl("https://openai-cgg5fftw4q-uc.a.run.app")
+            baseUrl("https://openaiv2-cgg5fftw4q-uc.a.run.app")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

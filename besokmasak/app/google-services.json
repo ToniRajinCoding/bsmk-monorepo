@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "656523438487",
+    "project_id": "besok-mask",
+    "storage_bucket": "besok-mask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656523438487:android:044ebab87567df61e2bcd2",
+        "android_client_info": {
+          "package_name": "com.example.besokmasak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656523438487-1fc9rj58ci26rc3n1a67ofhg2ho8a4sr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.besokmasak",
+            "certificate_hash": "b9f06a9b37b8a4677b0645ac2d9d6f3ae08a0c8e"
+          }
+        },
+        {
+          "client_id": "656523438487-2qa9s52pmhu1atbguukr30bjd160q6bs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb2pb80URORsSqQNzddEx8wtPMFkuNKlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656523438487-2qa9s52pmhu1atbguukr30bjd160q6bs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

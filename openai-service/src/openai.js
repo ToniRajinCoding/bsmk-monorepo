@@ -2,44 +2,22 @@ import * as dotenv from "dotenv";
 import OpenAI from "openai";
 import express from "express";
 import bodyParser from "body-parser";
+import admin from "firebase-admin";
+import serviceAccount from "../besok-mask-firebase-adminsdk-h5idz-b9c189be17.json" assert { type: "json" };
+import { DocumentSnapshot } from "firebase-admin/firestore";
 
 dotenv.config({ override: true, debug: true });
 const app = express();
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 app.use(bodyParser.json());
 
-async function getRecipe(ingredients, method) {
-  const completion = await openai.chat.completions.create({
-    messages: [
-      {
-        role: "system",
-        content: `You are a indonesian cuisine chef. 
-        Generate answer with JSON format structured {recipes: [{object}, {object}, {object}, ...]}
-        each object will have these attributes: recipe_name (string), ingredients (array of ingredients), and instructions (array of instructions).
-        Put ingredients quantity information at each ingredients item.
-        Do not change the JSON attribute name: recipe_name, ingredients, instructions.
-        `,
-      },
-      {
-        role: "user",
-        content: `Please give me 5 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
-      },
-    ],
-    model: "gpt-3.5-turbo",
-  });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://besok-mask.firebaseio.com",
+});
 
-  return completion.choices[0].message.content;
-}
-
-// async function getRecipeImage() {
-//   const response = await openai.images.generate({
-//     model: "dall-e-3",
-//     prompt: "a white siamese cat",
-//     n: 1,
-//     size: "1024x1024",
-//   });
-//   image_url = response.data[0].url;
-// }
+const db = admin.firestore();
+const recipeCollection = db.collection("recipes");
 
 function generateDummyRecipe() {
   const recipes = {
@@ -320,16 +298,141 @@ function generateDummyRecipe() {
   return recipes;
 }
 
+async function getRecipe(ingredients, method) {
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: "system",
+        content: `You are a indonesian cuisine chef. 
+        Generate answer with JSON format structured {recipes: [{object}, {object}, {object}, ...]}
+        each object must have these attributes in order: recipe_name (string), ingredients (array of ingredients and quantity), and instructions (array of instructions).
+        Do not change the JSON attribute name: recipe_name, ingredients[{ingredient, quantity}], instructions[].
+        `,
+      },
+      {
+        role: "user",
+        content: `Please give me 5 recipes inspiration that can be created from ${ingredients} and I want it to be ${method}`,
+      },
+    ],
+    model: "gpt-3.5-turbo",
+  });
+
+  return completion.choices[0].message.content;
+}
+
+async function getRecipeIndo(ingredients, method) {
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: "system",
+        content: `Kamu adalah chef dengan pengalaman memasak masakan indonesia, baik rumahan ataupun restoran.
+        Generate respon jawaban kamu dengan JSON format yang di struktur seperti ini {recipes: [{object}, {object}, {object}, ...]}.
+        Setiap object wajib memiliki atribut seperti berikut secara berurutan: recipe_name (String), ingredients (array yang berisi object dari ingredients dan quantity), dan instructions (array yang terdiri dari instructions)
+        Jangan merubah nama atribut JSON: recipe_name, ingredients[{ingredient, quantity}], instructions[]
+        `,
+      },
+      {
+        role: "user",
+        content: `Berikan 5 inspirasi resep dari ${ingredients} dan aku mau metode memasaknya ${method}`,
+      },
+    ],
+    model: "gpt-3.5-turbo",
+  });
+
+  return completion.choices[0].message.content;
+}
+
 app.post("/get-recipe", async (req, res) => {
   try {
-    console.log(process.env.OPENAI_API_KEY);
-    const { ingredients, method } = req.body;
-    const recipe = await getRecipe(ingredients, method);
-    console.log(recipe);
-    res.send(recipe);
+    //console.log(process.env.OPENAI_API_KEY);
+    const { ingredients, method, language } = req.body;
+
+    const response = await (language === "en" ? getRecipe : getRecipeIndo)(
+      ingredients,
+      method
+    );
+
+    //if generating error
+    if (!response) {
+      return res
+        .status(500)
+        .send("Error generating recipe. Please try again later.");
+    }
+
+    //parse the response string from OpenAI
+    const JSONResponse = JSON.parse(response);
+
+    //save data to firebase
+    for (const recipe of JSONResponse.recipes) {
+      const recipeNameWithoutSpaces = recipe.recipe_name.replace(/\s/g, "_");
+      const docRef = recipeCollection.doc(recipeNameWithoutSpaces);
+
+      docRef
+        .get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            console.log("Recipe Already exists: ", docSnapshot.id);
+          } else {
+            return docRef.set(recipe);
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    }
+
+    console.log(response);
+    res.send(response);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error generating recipe");
+    res.status(500).send("Error generating recipe!!");
+  }
+});
+
+app.post("/get-recipe-testdup", async (req, res) => {
+  try {
+    const jsonData = {
+      recipes: [
+        {
+          recipe_name: "Ayam Goreng Kecap Sajian Nasi Putih",
+          ingredients: [
+            {
+              ingredient: "ayam potong (daging ayam sesuai selera)",
+              quantity: "500 gram",
+            },
+            { ingredient: "kecap manis", quantity: "3 sendok makan" },
+            { ingredient: "bawang putih halus", quantity: "3 siung" },
+            { ingredient: "garam", quantity: "secukupnya" },
+            { ingredient: "merica bubuk", quantity: "secukupnya" },
+            { ingredient: "minyak goreng", quantity: "secukupnya" },
+            { ingredient: "nasi putih hangat", quantity: "secukupnya" },
+          ],
+          instructions: [
+            "Campurkan ayam potong, kecap manis, bawang putih halus, garam, dan merica bubuk. Diamkan selama 30 menit.",
+            "Panaskan minyak goreng dalam wajan.",
+            "Goreng ayam hingga matang dan berwarna kecoklatan.",
+            "Sajikan ayam goreng kecap dengan nasi putih hangat.",
+          ],
+        },
+      ],
+    };
+
+    for (const recipe of jsonData.recipes) {
+      const recipeNameWithoutSpaces = recipe.recipe_name.replace(/\s/g, "_");
+      const recipeDocRef = recipeCollection.doc(recipeNameWithoutSpaces);
+      await recipeDocRef.set(recipe).catch((error) => {
+        if (error.code === "ALREADY-EXISTS") {
+          console.log("Recipe already exists");
+        } else {
+          console.error("Error: ", error);
+        }
+      });
+    }
+
+    res.send(jsonData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error generating recipe!!");
   }
 });
 
@@ -344,6 +447,16 @@ app.post("/get-dummy-recipe", (req, res) => {
     res.status(500).send("Error generating recipe dummy");
   }
 });
+
+// async function getRecipeImage() {
+//   const response = await openai.images.generate({
+//     model: "dall-e-3",
+//     prompt: "a white siamese cat",
+//     n: 1,
+//     size: "1024x1024",
+//   });
+//   image_url = response.data[0].url;
+// }
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

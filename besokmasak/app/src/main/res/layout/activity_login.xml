@@ -5,31 +5,75 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
     android:background="@color/cream"
-    >
+    tools:context=".LoginActivity">
 
   <TextView
       android:id="@+id/textView3"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/ws_semibold"
+      android:text="@string/hello"
+      android:gravity="center"
+      android:textColor="@color/navy_blue"
+      android:textSize="40sp"
+      app:layout_constraintBottom_toTopOf="@+id/textView4"
+      app:layout_constraintEnd_toEndOf="@id/guideline3"
+      app:layout_constraintStart_toStartOf="@id/guideline2"/>
+
+  <TextView
+      android:id="@+id/textView4"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/ws_medium"
+      android:text="@string/we_have_been_waiting_for_you_n_nlet_s_get_started"
+      android:textColor="@color/navy_blue"
+      android:gravity="center"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toTopOf="@+id/guideline4"
+      app:layout_constraintEnd_toEndOf="@id/guideline3"
+      app:layout_constraintStart_toStartOf="@id/guideline2"/>
+
+  <com.github.ybq.android.spinkit.SpinKitView
+      style="@style/SpinKitView.ChasingDots"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Sign in with your google account"
-      android:textColor="@color/navy_blue"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:SpinKit_Color="@color/navy_blue"
+      android:layout_marginBottom="16dp"
+      android:padding="16dp"
+      app:layout_constraintBottom_toTopOf="@+id/textView3"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintStart_toStartOf="parent" />
 
-  <com.google.android.gms.common.SignInButton
+
+  <com.shobhitpuri.custombuttons.GoogleSignInButton
       android:id="@+id/btnSignIn"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
       android:layout_marginTop="24dp"
-      android:textSize="18sp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/textView3" />
+      app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_begin="40dp" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_end="40dp" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline4"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

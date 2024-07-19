@@ -44,26 +44,6 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
         //setup ads
         admobManager.loadAds()
-//        val adRequest = AdRequest.Builder().build()
-//        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-//            override fun onAdFailedToLoad(adError: LoadAdError) {
-//                Log.d("TAGGGG", adError.toString())
-//                mInterstitialAd = null
-//            }
-//
-//            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-//                Log.d("TAGGGGG", "Ad was loaded.")
-//                mInterstitialAd = interstitialAd
-//            }
-//        })
-
-        //show ads when user reached the view
-//        if (mInterstitialAd != null) {
-//            mInterstitialAd?.show(this)
-//        } else {
-//            Log.d("TAG", "The interstitial ad wasn't ready yet.")
-//        }
-
 
         //initialize the cardStackView
         initialize()

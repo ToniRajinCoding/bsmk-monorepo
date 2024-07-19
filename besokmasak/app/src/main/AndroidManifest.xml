@@ -17,8 +17,16 @@
         android:theme="@style/Theme.BesokMasak"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LoginActivity"
+            android:name=".LanguageActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -26,7 +34,7 @@
 
         <activity
             android:name=".testing.TestingActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".favorite.FavoriteActivity"
             android:exported="false" />
@@ -36,11 +44,7 @@
         <activity
             android:name=".search.SearchActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:fillViewport="true"
-        >
+        tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                         android:paddingLeft="24dp"
                         android:paddingTop="24dp"
                         android:paddingRight="24dp"
-                        android:text="Let's start deciding what to cook tomorrow"
+                        android:text="@string/let_s_start_deciding_what_to_cook_tomorrow"
                         android:textColor="@color/navy_blue"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -80,7 +80,7 @@
                             android:id="@+id/etIngredients"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="chicken, potato, mushroom"
+                            android:hint="@string/chicken_potato_mushroom"
                             android:padding="16dp"
                             android:textColor="@color/dark_teal"
                             android:textSize="14sp" />
@@ -105,20 +105,19 @@
                             android:id="@+id/etMethod"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="steamed / baked / fried"
+                            android:hint="@string/steamed_baked_fried"
                             android:padding="16dp"
                             android:textColor="@color/dark_teal"
                             android:textSize="14sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-
                     <Button
                         android:id="@+id/btnSubmit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="56dp"
-                        android:text="Find recipe"
+                        android:text="@string/find_recipe"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

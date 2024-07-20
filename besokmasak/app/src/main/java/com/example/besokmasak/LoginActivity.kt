@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.besokmasak.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.BuildConfig
@@ -29,21 +30,26 @@ class LoginActivity : AppCompatActivity() {
 
         val gAuthToken = AuthTokenPref.getGoogleAuthToken(this)
 
-        if(gAuthToken!=null){
+        //check if user loggedin
+        if(gAuthToken.isNullOrEmpty()){
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(com.example.besokmasak.BuildConfig.WEB_CLIENT_ID)
+                .requestEmail()
+                .build()
 
+            val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+            binding.btnSignIn.setOnClickListener{
+                val signInIntent = mGoogleSignInClient.signInIntent
+                startActivityForResult(signInIntent,RC_SIGN_IN)
+            }
+        }else{
+            val intentLA = Intent(this, LanguageActivity::class.java)
+            startActivity(intentLA)
+            finish()
         }
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(com.example.besokmasak.BuildConfig.WEB_CLIENT_ID)
-            .requestEmail()
-            .build()
 
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        binding.btnSignIn.setOnClickListener{
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent,RC_SIGN_IN)
-        }
 
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //            .requestIdToken(getString(R.string.default_web_client_id))
@@ -83,24 +89,24 @@ class LoginActivity : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
-                account.idToken?.let { firebaseAuthWithGoogle(it) }
-
+               firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("WOW", "Logged in! Nice!!! Now check firebase")
-
+                    AuthTokenPref.setGoogleAuthToken(this,account.idToken,account.displayName,account.email)
                     val intentLA = Intent(this, LanguageActivity::class.java)
                     startActivity(intentLA)
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("SED", "Gagal Ngab")

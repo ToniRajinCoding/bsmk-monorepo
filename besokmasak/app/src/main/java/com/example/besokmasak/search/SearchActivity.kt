@@ -1,5 +1,6 @@
 package com.example.besokmasak.search
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -7,6 +8,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.besokmasak.AuthTokenPref
+import com.example.besokmasak.LanguageActivity
+import com.example.besokmasak.LanguagePref
+import com.example.besokmasak.LoginActivity
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.ActivitySearchBinding
 import com.google.android.gms.ads.AdRequest
@@ -29,6 +34,17 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val gAuthToken = AuthTokenPref.getGoogleAuthToken(this)
+        val userLanguage = LanguagePref.getUserLanguage(this)
+
+        if(gAuthToken.isNullOrEmpty()){
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }else if(userLanguage.isNullOrEmpty()){
+            val intent = Intent(this, LanguageActivity::class.java)
+            startActivity(intent)
+        }
 
         //set Toolbar
         setSupportActionBar(binding.appBarMain.toolbar)

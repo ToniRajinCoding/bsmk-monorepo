@@ -15,7 +15,7 @@ object AuthTokenPref {
         return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    fun setGoogleAuthToken(context: Context, idToken : String, name : String, email : String){
+    fun setGoogleAuthToken(context: Context, idToken : String?, name : String?, email : String?){
         val editor = getSharedPreferences(context).edit()
         editor.putString(USER_TOKEN, idToken)
         editor.putString(USER_NAME, name)

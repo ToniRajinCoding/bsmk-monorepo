@@ -21,7 +21,6 @@ class LanguageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userlanguage = LanguagePref.getUserLanguage(this)
-        Log.d("ISI DARI SHAREDPREF", userlanguage ?: "KOSONG")
 
         if (userlanguage.isNullOrEmpty()) {
             binding.btnEn.setOnClickListener{

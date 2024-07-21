@@ -25,7 +25,9 @@
             app:headerLayout="@layout/header"
             app:menu="@menu/menu"
             android:fitsSystemWindows="true"
-            />
+            >
+
+        </com.google.android.material.navigation.NavigationView>
 
 <!--<androidx.constraintlayout.widget.ConstraintLayout-->
 <!--    android:layout_width="match_parent"-->

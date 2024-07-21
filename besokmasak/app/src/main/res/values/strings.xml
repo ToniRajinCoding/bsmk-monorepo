@@ -17,4 +17,8 @@
     <string name="chicken_potato_mushroom">chicken, potato, mushroom</string>
     <string name="steamed_baked_fried">steamed / baked / fried</string>
     <string name="find_recipe">Find recipe</string>
+    <string name="your_ai_recipe_inspiration">your AI recipe inspiration</string>
+    <string name="search">search</string>
+    <string name="favorite">favorite</string>
+    <string name="logout">Logout</string>
 </resources>

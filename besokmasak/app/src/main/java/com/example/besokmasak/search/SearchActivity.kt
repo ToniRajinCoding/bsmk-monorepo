@@ -3,6 +3,7 @@ package com.example.besokmasak.search
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -40,9 +41,11 @@ class SearchActivity : AppCompatActivity() {
 
         if(gAuthToken.isNullOrEmpty()){
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }else if(userLanguage.isNullOrEmpty()){
             val intent = Intent(this, LanguageActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
 
@@ -56,6 +59,18 @@ class SearchActivity : AppCompatActivity() {
             AppBarConfiguration(setOf(R.id.navSearch, R.id.navFavorite, R.id.navResult), binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+
+            when(menuItem.itemId){
+                R.id.navLogout -> {
+                    doLogout()
+                    finish()
+                }
+            }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
 
         //initialize ads
 //        val backgroundScope = CoroutineScope(Dispatchers.IO)
@@ -72,5 +87,14 @@ class SearchActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    private fun doLogout() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val sharedPreferences = getSharedPreferences("AUTH_PREFERENCE", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+        startActivity(intent)
+    }
 
 }

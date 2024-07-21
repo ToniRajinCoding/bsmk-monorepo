@@ -11,8 +11,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Besok Masak"
-        android:textSize="39sp"
+        android:text="@string/app_name"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/white"
         />
@@ -20,8 +20,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="your AI recipe inspiration"
-        android:textSize="20sp"
+        android:text="@string/your_ai_recipe_inspiration"
+        android:textSize="16sp"
         android:textColor="@color/white"
         />
 

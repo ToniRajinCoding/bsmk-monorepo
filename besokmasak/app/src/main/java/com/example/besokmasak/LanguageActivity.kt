@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.besokmasak.databinding.ActivityLanguageBinding
@@ -20,9 +22,9 @@ class LanguageActivity : AppCompatActivity() {
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userlanguage = LanguagePref.getUserLanguage(this)
+        val userLanguage = LanguagePref.getUserLanguage(this)
 
-        if (userlanguage.isNullOrEmpty()) {
+        if (userLanguage.isNullOrEmpty()) {
             binding.btnEn.setOnClickListener{
                 val language = "en"
                 LanguagePref.setUserLanguage(this,language)
@@ -40,6 +42,7 @@ class LanguageActivity : AppCompatActivity() {
                 finish()
             }
         }else{
+            updateResource(userLanguage)
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
             finish() // Finish this activity since it's not needed
@@ -47,13 +50,14 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun updateResource(lanCode:String){
-        Log.d("Tag", "RESOURCE UPDATE!!")
-        val local = Locale(lanCode)
-        Locale.setDefault(local)
-        val config = resources.configuration
-        config.setLocale(local)
-        resources.updateConfiguration(config,resources.displayMetrics)
-        Log.d("Tag", "RESOURCE UPDATEDDD!!")
-
+//        Log.d("Tag", "RESOURCE UPDATE!!")
+//        val local = Locale(lanCode)
+//        Locale.setDefault(local)
+//        val config = resources.configuration
+//        config.setLocale(local)
+//        resources.updateConfiguration(config,resources.displayMetrics)
+//        Log.d("Tag", "RESOURCE UPDATEDDD!!")
+        val localeList = LocaleListCompat.create(Locale(lanCode))
+        AppCompatDelegate.setApplicationLocales(localeList)
     }
 }

@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.besokmasak.databinding.ActivityLanguageBinding
 import com.example.besokmasak.search.SearchActivity
+import com.example.besokmasak.databinding.ActivityLanguageBinding
 import java.util.Locale
 
 class LanguageActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class LanguageActivity : AppCompatActivity() {
                 updateResource(language)
                 val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
-                finish()
+
             }
             binding.btnId.setOnClickListener{
                 val language = "in"
@@ -39,9 +39,11 @@ class LanguageActivity : AppCompatActivity() {
                 updateResource(language)
                 val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
-                finish()
+
             }
         }else{
+            Log.d("user-language : ", userLanguage)
+
             updateResource(userLanguage)
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
@@ -50,13 +52,6 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun updateResource(lanCode:String){
-//        Log.d("Tag", "RESOURCE UPDATE!!")
-//        val local = Locale(lanCode)
-//        Locale.setDefault(local)
-//        val config = resources.configuration
-//        config.setLocale(local)
-//        resources.updateConfiguration(config,resources.displayMetrics)
-//        Log.d("Tag", "RESOURCE UPDATEDDD!!")
         val localeList = LocaleListCompat.create(Locale(lanCode))
         AppCompatDelegate.setApplicationLocales(localeList)
     }

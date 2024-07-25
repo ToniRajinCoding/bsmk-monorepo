@@ -14,15 +14,19 @@ data class RecipeEntity(
     var recipe_name: String,
 
     @ColumnInfo(name = "ingredients")
-    @TypeConverters(StringListConverter::class)
-    var ingredients: List<String>,
+    @TypeConverters(Converter::class)
+    var ingredients: List<IngredientEntity>,
 
     @ColumnInfo(name = "instructions")
-    @TypeConverters(StringListConverter::class)
+    @TypeConverters(Converter::class)
     var instructions: List<String>,
 
     @ColumnInfo(name = "isFavorited")
     var isFavorited: Boolean
 
+)
 
+data class IngredientEntity(
+    var ingredient: String,
+    var quantity: String
 )

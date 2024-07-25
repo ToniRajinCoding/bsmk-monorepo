@@ -7,18 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:656523438487:android:044ebab87567df61e2bcd2",
+        "mobilesdk_app_id": "1:656523438487:android:e5960d6264c9bf8fe2bcd2",
         "android_client_info": {
-          "package_name": "com.example.besokmasak"
+          "package_name": "com.toraco.besokmasak"
         }
       },
       "oauth_client": [
         {
-          "client_id": "656523438487-1fc9rj58ci26rc3n1a67ofhg2ho8a4sr.apps.googleusercontent.com",
+          "client_id": "656523438487-aha73vsoqruo6vfnlvb6mcbgo4p1q7l0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.besokmasak",
+            "package_name": "com.toraco.besokmasak",
+            "certificate_hash": "0e8faea4d61c8d00e6d4fb7f7b1ac53aacb6cf98"
+          }
+        },
+        {
+          "client_id": "656523438487-frnkddbfqfjllvd3c5utjuhrokto3ufp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.toraco.besokmasak",
             "certificate_hash": "b9f06a9b37b8a4677b0645ac2d9d6f3ae08a0c8e"
+          }
+        },
+        {
+          "client_id": "656523438487-mdmb4aamoh1fdtji5djqshv0j94q54fp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.toraco.besokmasak",
+            "certificate_hash": "bd62eecf144f928e2f777371f39d4454fea67baa"
           }
         },
         {
@@ -43,5 +59,5 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "2"
 }

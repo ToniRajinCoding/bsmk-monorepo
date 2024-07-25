@@ -19,7 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-#-if class androidx.credentials.CredentialManager
-#-keep class androidx.credentials.playservices.** {
-#  *;
-#}
+#-keep class com.example.besokmasak.core.data.source.*
+#-keep class com.example.besokmasak.core.domain.model.Recipes
+#-keep class com.google.android.gms.auth.** { *; }
+#-keep class com.google.android.gms.common.** { *; }
+#-keep class com.google.android.gms.tasks.** { *; }
+#-keep public class * extends android.app.Activity
+-dontobfuscate

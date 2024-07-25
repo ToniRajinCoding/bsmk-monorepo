@@ -6,6 +6,11 @@ data class RecipeResponse(
 
 data class Recipe(
     val recipe_name: String,
-    val ingredients: List<String>,
+    val ingredients: List<Ingredients>,
     val instructions: List<String>,
+)
+
+data class Ingredients(
+    val ingredient: String,
+    val quantity: String
 )

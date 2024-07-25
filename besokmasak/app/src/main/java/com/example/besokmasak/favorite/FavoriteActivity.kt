@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.besokmasak.core.domain.model.Recipes
 import com.example.besokmasak.databinding.ActivityFavoriteDetailBinding
-import com.example.besokmasak.databinding.FavoriteRecipeCardBinding
-import com.example.besokmasak.databinding.RecipeDetailBinding
 import com.example.besokmasak.ui.IngredientAdapter
 import com.example.besokmasak.ui.InstructionAdapter
 import dagger.hilt.android.AndroidEntryPoint

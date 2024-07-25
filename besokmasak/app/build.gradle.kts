@@ -12,16 +12,14 @@ plugins {
 android {
     namespace = "com.example.besokmasak"
     compileSdk = 34
-
     defaultConfig {
-        applicationId = "com.example.besokmasak"
+        applicationId = "com.toraco.besokmasak"
         minSdk = 30
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         android.buildFeatures.buildConfig = true
-
 
         val keystoreFile = project.rootProject.file("local.properties")
         val properties = Properties()
@@ -38,11 +36,18 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField(type = "String", "AD_MOB_APP_ID", "\"ca-app-pub-9571606876604535/8013659021\"")
+        }
+        debug {
+            isDebuggable = true
+            buildConfigField(type = "String", "AD_MOB_APP_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+
         }
     }
 
@@ -112,4 +117,5 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.7.0")
 
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
 }

@@ -3,9 +3,11 @@ package com.example.besokmasak.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.besokmasak.R
+import com.example.besokmasak.core.domain.model.RecipesIngredients
 import com.example.besokmasak.databinding.RecipeItemListBinding
 
-class IngredientAdapter(private val ingredientList: List<String>) :
+class IngredientAdapter(private val ingredientList: List<RecipesIngredients>) :
     RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
     class IngredientViewHolder(val binding: RecipeItemListBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -21,7 +23,8 @@ class IngredientAdapter(private val ingredientList: List<String>) :
     }
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        val ingredient = ingredientList[position]
-        holder.binding.itemText.text = ingredient
+        val ingredient = ingredientList[position].ingredient
+        val quantity = ingredientList[position].quantity
+        holder.binding.itemText.text = holder.itemView.context.getString(R.string.ingredients_list, quantity, ingredient)
     }
 }

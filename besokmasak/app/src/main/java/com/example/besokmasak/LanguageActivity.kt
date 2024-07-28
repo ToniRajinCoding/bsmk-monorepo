@@ -43,7 +43,6 @@ class LanguageActivity : AppCompatActivity() {
             }
         }else{
             Log.d("user-language : ", userLanguage)
-
             updateResource(userLanguage)
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)

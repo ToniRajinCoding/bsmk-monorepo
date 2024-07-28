@@ -10,7 +10,7 @@
     <string name="instructions">Instructions</string>
     <string name="we_have_been_waiting_for_you_n_nlet_s_get_started">We have been waiting for you\n\nLet\'s get started!!</string>
     <string name="hello">Hello!</string>
-    <string name="tips_try_changing_adding_inputs_to_generate_different_recipes">Tips: Try changing / adding inputs to generate different recipes!</string>
+    <string name="tips_try_changing_adding_inputs_to_generate_different_recipes">Tips: Try changing / adding inputs to generate different recipes! \n\n\n\n\n if there is an issue persist, please generate the recipe again</string>
     <string name="swipe_left_or_right_to_see_next_recipe">Swipe left or right to see next recipe</string>
     <string name="list_of_recipes_you_have_collected">List of recipes you have collected</string>
     <string name="let_s_start_deciding_what_to_cook_tomorrow">Let\'s start deciding what to cook tomorrow</string>
@@ -21,5 +21,7 @@
     <string name="search">search</string>
     <string name="favorite">favorite</string>
     <string name="logout">Logout</string>
-    <string name="ingredients_list" translatable="false">%1$s %2$s</string>
+    <string name="ingredients_list">%1$s %2$s</string>
+    <string name="added_fav">You added this recipe to favorite</string>
+    <string name="removed_fav">You removed this recipe to favorite</string>
 </resources>

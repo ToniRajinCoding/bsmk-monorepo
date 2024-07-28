@@ -36,10 +36,8 @@ class RecipeResultAdapter(
                 rvIngredients.layoutManager = LinearLayoutManager(itemView.context)
                 var counter = 0
                 favBtn.setOnClickListener {
-                    Log.d("favBtn clicked", "fav btn clicked! yay")
-
                     val isFavorited = counter % 2 == 0
-                    val message = if (isFavorited) "You add this recipe to favorite" else "You removed this recipe from favorites"
+                    val message = if (isFavorited) R.string.added_fav else R.string.removed_fav
                     viewmodel.updateFavoriteState(data,isFavorited)
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
                     with(snackbar){

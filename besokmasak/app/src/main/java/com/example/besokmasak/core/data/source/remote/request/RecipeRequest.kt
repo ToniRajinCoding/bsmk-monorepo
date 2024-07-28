@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 
 data class RecipeRequest(
     val ingredients: String,
-    val method: String
+    val method: String,
+    val language: String
 )
 
 

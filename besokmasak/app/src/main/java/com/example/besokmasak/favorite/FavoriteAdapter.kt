@@ -11,6 +11,7 @@ import com.example.besokmasak.R
 import com.example.besokmasak.core.domain.model.Recipes
 import com.example.besokmasak.databinding.FavoriteRecipeCardBinding
 import com.google.android.material.snackbar.Snackbar
+import java.io.Serializable
 
 class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val context: Context) : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>(){
 
@@ -23,12 +24,13 @@ class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val cont
                 tvFavTitle.text = data.recipe_name
                 itemView.setOnClickListener{
                     val intent = Intent(context, FavoriteActivity::class.java)
-                    intent.putExtra("recipes", data)
+//                    intent.putExtra("RECIPE_NAME", data.recipe_name)
+                    intent.putExtra("RECIPES", data as Serializable)
                     context.startActivity(intent)
                 }
                 favBtn.setOnClickListener {
                     viewmodel.updateFavoriteState(data,false)
-                    val message = "you unfavorited this recipe"
+                    val message = R.string.removed_fav
                     val snackbar = Snackbar.make(itemView, message, Snackbar.LENGTH_SHORT)
                     with(snackbar){
                         setBackgroundTint(context.getColor(R.color.darker_teal))

@@ -10,9 +10,9 @@
     <string name="instructions">Instruksi</string>
     <string name="we_have_been_waiting_for_you_n_nlet_s_get_started">We have been waiting for you\n\nLet\'s get started!!</string>
     <string name="hello">Hello!</string>
-    <string name="tips_try_changing_adding_inputs_to_generate_different_recipes">Tips: Coba mengubah / menambahkan bahan untuk menghasilkan resep-resep unik</string>
+    <string name="tips_try_changing_adding_inputs_to_generate_different_recipes">Tips: Coba mengubah / menambahkan bahan untuk menghasilkan resep-resep unik \n\n\n\n\nApabila ada kendala dalam proses, kamu bisa ulangi kembali proses nya</string>
     <string name="swipe_left_or_right_to_see_next_recipe">Geser kiri dan kanan untuk melihat resep lain</string>
-    <string name="list_of_recipes_you_have_collected">List dari resep-resep yang telah kamu favoritkan</string>
+    <string name="list_of_recipes_you_have_collected">Resep-resep yang telah kamu simpan</string>
     <string name="let_s_start_deciding_what_to_cook_tomorrow">Tentukan apa yang akan dimasak besok!</string>
     <string name="chicken_potato_mushroom">ayam, kentang, jamur</string>
     <string name="steamed_baked_fried">rebus / panggang / goreng</string>
@@ -21,4 +21,7 @@
     <string name="search">search</string>
     <string name="favorite">favorite</string>
     <string name="logout">Logout</string>
+    <string name="ingredients_list">%1$s %2$s</string>
+    <string name="added_fav">Kamu menambahkan resep ini ke dalam favorit</string>
+    <string name="removed_fav">Kamu menghapus resep ini ke dalam favorit</string>
 </resources>

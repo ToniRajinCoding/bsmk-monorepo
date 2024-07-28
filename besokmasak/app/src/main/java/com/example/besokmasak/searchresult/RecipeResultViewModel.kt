@@ -34,10 +34,10 @@ class RecipeResultViewModel @Inject constructor(
     val _recipesLiveData = MutableLiveData<Resource<List<Recipes>>>()
     val recipesLiveData : LiveData<Resource<List<Recipes>>> = _recipesLiveData
 
-    fun searchQuery(ingredients: String, method: String){
+    fun searchQuery(ingredients: String, method: String, language: String){
         Log.d("Search Query","Search Query Dijalankan")
 
-        val recipeRequest = RecipeRequest(ingredients = ingredients, method = method)
+        val recipeRequest = RecipeRequest(ingredients = ingredients, method = method, language = language)
 
         viewModelScope.launch {
             val recipesFlow = recipeUseCase.searchRecipe(recipeRequest)

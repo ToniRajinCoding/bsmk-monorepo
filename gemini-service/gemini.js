@@ -3,7 +3,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import admin from "firebase-admin";
-import serviceAccount from "./besok-mask-28eb9fb8fb5f.json" assert { type: "json" };
+import { readFile } from "fs/promises";
+const serviceAccount = JSON.parse(
+  await readFile("./besok-mask-28eb9fb8fb5f.json", "utf8")
+);
+
+// import serviceAccount from "./besok-mask-28eb9fb8fb5f.json" assert { type: "json" };
 
 dotenv.config();
 const app = express();
@@ -46,13 +51,13 @@ async function generateRecipe(ingredients, method) {
                 "quantity": {
                   "type": "string"
                 },
-                "name": {
+                "ingredient": {
                   "type": "string"
                 }
               },
               "required": [
                 "quantity",
-                "name"
+                "ingredient"
               ]
             }
           },
@@ -112,17 +117,17 @@ async function generateRecipeIndo(ingredients, method) {
                 "quantity": {
                   "type": "string"
                 },
-                "name": {
+                "ingredient": {
                   "type": "string"
                 }
               },
               "required": [
                 "quantity",
-                "name"
+                "ingredient"
               ]
             }
           },
-          "instructions": {
+          "instructions": {s
             "type": "array",
             "items": {
               "type": "string"
@@ -448,6 +453,8 @@ app.post("/get-recipe", async (req, res) => {
 
     //save data to firebase
     for (const recipe of RecipeJSON.recipes) {
+      recipe.language = language;
+
       const recipeNameWithoutSpaces = recipe.recipe_name.replace(/\s/g, "_");
       const docRef = recipeCollection.doc(recipeNameWithoutSpaces);
 

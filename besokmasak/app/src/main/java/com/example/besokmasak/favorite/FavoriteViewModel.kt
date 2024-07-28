@@ -1,5 +1,6 @@
 package com.example.besokmasak.favorite
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,13 +11,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(private val recipeUseCase: RecipeUseCase) : ViewModel(){
+class FavoriteViewModel @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+    ViewModel() {
 
-val favoriteRecipe = recipeUseCase.getAllRecipe().asLiveData()
+    val favoriteRecipe = recipeUseCase.getAllRecipe().asLiveData()
 
-    fun updateFavoriteState(recipe:Recipes, state: Boolean){
+    val selectedRecipes = MutableLiveData<Recipes>()
+
+
+
+    fun updateFavoriteState(recipe: Recipes, state: Boolean) {
         viewModelScope.launch {
-            recipeUseCase.updateFavoritedRecipe(recipe,state)
+            recipeUseCase.updateFavoritedRecipe(recipe, state)
         }
     }
 

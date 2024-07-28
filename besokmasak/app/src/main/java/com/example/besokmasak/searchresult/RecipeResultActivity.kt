@@ -7,6 +7,7 @@ import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.example.besokmasak.LanguagePref
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.utils.AdmobManager
@@ -30,6 +31,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
     private val viewModel: RecipeResultViewModel by viewModels()
     private lateinit var adapter: RecipeResultAdapter
+    private val language by lazy {LanguagePref.getUserLanguage(this)}
     //private val adRequest by lazy { AdRequest.Builder().build() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
         //if the intent passed successfully
         if (ingredients != null && method != null) {
-            viewModel.searchQuery(ingredients, method)
+            viewModel.searchQuery(ingredients, method, language!!)
             viewModel.recipesLiveData.observe(this) { resource ->
                 when (resource) {
                     is Resource.Success -> {
@@ -89,7 +91,8 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
                     is Resource.Error -> {
                         with(binding.tvTips) {
-                            text = "There's a problem generating recipe, please try again. " +
+                            text = resource.message +
+                                "\n\nThere's a problem generating recipe, please try again. " +
                                     "\nIf issue persist, please contact tonirajincoding@gmail.com"
                             visibility = View.VISIBLE
                         }
@@ -130,7 +133,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
         val method = intent.getStringExtra("method")
         if (ingredients != null && method != null) {
             viewModel._recipesLiveData.postValue(Resource.Loading())
-            viewModel.searchQuery(ingredients, method)
+            viewModel.searchQuery(ingredients, method, language!!)
         }
     }
 

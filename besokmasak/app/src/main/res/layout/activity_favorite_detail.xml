@@ -39,8 +39,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="24dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:paddingBottom="24dp">
 
                 <TextView
                     android:id="@+id/tvRecipeName"
@@ -85,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/ws_semibold"
                     android:text="@string/instructions"
                     android:textColor="@color/black"
                     android:textSize="18sp"

@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.besokmasak.core.data.source.local.entity.Converter
 import com.example.besokmasak.core.data.source.local.entity.RecipeEntity
-import com.example.besokmasak.core.data.source.local.entity.StringListConverter
 
 @Database(entities = [RecipeEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)

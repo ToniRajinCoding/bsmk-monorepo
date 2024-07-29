@@ -24,4 +24,7 @@
     <string name="ingredients_list">%1$s %2$s</string>
     <string name="added_fav">You added this recipe to favorite</string>
     <string name="removed_fav">You removed this recipe to favorite</string>
+    <string name="input_your_ingredients">Input your ingredients</string>
+    <string name="input_cooking_method">Input cooking method</string>
+    <string name="error_generating_message">%1$s \n\nThere\'s a problem generating recipe, please try again.\nIf issue persist, please contact tonirajincoding@gmail.com</string>
 </resources>

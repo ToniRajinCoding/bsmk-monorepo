@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.besokmasak.LanguagePref
+import com.example.besokmasak.R
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
 import com.example.besokmasak.utils.AdmobManager
@@ -91,9 +92,7 @@ class RecipeResultActivity : AppCompatActivity(), CardStackListener {
 
                     is Resource.Error -> {
                         with(binding.tvTips) {
-                            text = resource.message +
-                                "\n\nThere's a problem generating recipe, please try again. " +
-                                    "\nIf issue persist, please contact tonirajincoding@gmail.com"
+                            text = context.getString(R.string.error_generating_message, resource.message)
                             visibility = View.VISIBLE
                         }
                         binding.loadingBar.visibility = View.INVISIBLE

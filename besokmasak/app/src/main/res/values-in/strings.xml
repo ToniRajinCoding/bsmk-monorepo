@@ -17,11 +17,14 @@
     <string name="chicken_potato_mushroom">ayam, kentang, jamur</string>
     <string name="steamed_baked_fried">rebus / panggang / goreng</string>
     <string name="find_recipe">Cari Resep</string>
-    <string name="your_ai_recipe_inspiration">your AI recipe inspiration</string>
+    <string name="your_ai_recipe_inspiration">AI Pembuat resep makanan</string>
     <string name="search">search</string>
     <string name="favorite">favorite</string>
     <string name="logout">Logout</string>
     <string name="ingredients_list">%1$s %2$s</string>
     <string name="added_fav">Kamu menambahkan resep ini ke dalam favorit</string>
     <string name="removed_fav">Kamu menghapus resep ini ke dalam favorit</string>
+    <string name="input_your_ingredients">Masukan bahan yang kamu punya</string>
+    <string name="input_cooking_method">Masukan metode masak yang kamu mau</string>
+    <string name="error_generating_message">%1$s \n\n Terdapat masalah saat mencari resep.\nApabila masalah terus terjadi, silahkan hubungi aku di ToniRajinCoding@gmail.com</string>
 </resources>

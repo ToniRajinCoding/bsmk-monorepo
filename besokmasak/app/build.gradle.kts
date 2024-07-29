@@ -7,6 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -16,7 +17,7 @@ android {
         applicationId = "com.toraco.besokmasak"
         minSdk = 30
         targetSdk = 34
-        versionCode = 2
+        versionCode = 5
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         android.buildFeatures.buildConfig = true
@@ -36,8 +37,8 @@ android {
 
     buildTypes {
         release {
-            isShrinkResources = true
-            isMinifyEnabled = true
+            isShrinkResources = false
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -116,6 +117,8 @@ dependencies {
     implementation("com.github.shobhitpuri:custom-google-signin-button:2.0.0")
 
     implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
+
 }

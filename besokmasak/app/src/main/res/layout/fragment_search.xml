@@ -64,6 +64,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -72,14 +73,16 @@
                         android:padding="16dp"
                         android:textColorHint="@color/darker_teal"
                         app:boxStrokeColor="@color/dark_brown"
-                        app:helperText="Input your ingredients"
+                        app:helperText="@string/input_your_ingredients"
                         app:helperTextTextColor="@color/dark_brown"
-                        app:layout_constraintTop_toBottomOf="@+id/textView">
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        tools:layout_editor_absoluteX="0dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etIngredients"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/ws_semibold"
                             android:hint="@string/chicken_potato_mushroom"
                             android:padding="16dp"
                             android:textColor="@color/dark_teal"
@@ -87,7 +90,6 @@
 
 
                     </com.google.android.material.textfield.TextInputLayout>
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout2"
@@ -97,7 +99,7 @@
                         android:padding="16dp"
                         android:textColorHint="@color/darker_teal"
                         app:boxStrokeColor="@color/dark_brown"
-                        app:helperText="Input cooking method"
+                        app:helperText="@string/input_cooking_method"
                         app:helperTextTextColor="@color/dark_brown"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
@@ -107,6 +109,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/steamed_baked_fried"
                             android:padding="16dp"
+                            android:fontFamily="@font/ws_semibold"
                             android:textColor="@color/dark_teal"
                             android:textSize="14sp" />
 

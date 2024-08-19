@@ -5,11 +5,10 @@ Besok Masak is an Android application that utilizes AI to generate recipe ideas 
 ![Graphic image 1](besokmasak/graphic-asset/1.png)   ![Graphic image 2](besokmasak/graphic-asset/2.png)   ![Graphic image 3](besokmasak/graphic-asset/3.png)   ![Graphic image 4](besokmasak/graphic-asset/4.png)  
 
 <br>
-<h2>Tech Stack</h2>
-Frontend: Kotlin, MVVM, Coroutines, Flow, Dagger Hilt, AdMob, Room
-Backend: Firebase Auth, Firebase Datastore, Firebase Crashlytics, Google Cloud Run, Node.js
+<h2>Tech I use to create this</h2>
+Kotlin, MVVM, Coroutines, Flow, Dagger Hilt, AdMob, Room, Firebase Auth, Firebase Datastore, Firebase Crashlytics, Google Cloud Run, Node.js
 
-<h2>Features</h2>
+<h2>Inside this app</h2>
 <li>AI-powered recipe generation based on user-provided ingredients and cooking method</li>
 <li>User-friendly interface for inputting ingredients and preferences</li>
 <li>AdMob integration for monetization</li>
@@ -18,7 +17,7 @@ Backend: Firebase Auth, Firebase Datastore, Firebase Crashlytics, Google Cloud R
 <li>Crash reporting and analytics with Firebase Crashlytics</li>
 <li>Scalable backend infrastructure using Google Cloud Run and Node.js</li>
 
-<h2>Architecture</h2>
+<h2>How I design this app</h2>
 <li>MVVM: Separates concerns between Model, View, and ViewModel for better maintainability and testability.</li>
 <li>Coroutines and Flow: Handles asynchronous operations efficiently and manages data flow.</li>
 <li>Dagger Hilt: Manages dependency injection for singleton and testability.</li>

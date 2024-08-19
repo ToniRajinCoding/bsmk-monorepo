@@ -4,10 +4,6 @@ Besok Masak is an Android application that utilizes AI to generate recipe ideas 
 
 ![Graphic image 1](besokmasak/graphic-asset/1.png)   ![Graphic image 2](besokmasak/graphic-asset/2.png)   ![Graphic image 3](besokmasak/graphic-asset/3.png)   ![Graphic image 4](besokmasak/graphic-asset/4.png)  
 
-<br>
-<h2>Tech I use to create this</h2>
-Kotlin, MVVM, Coroutines, Flow, Dagger Hilt, AdMob, Room, Firebase Auth, Firebase Datastore, Firebase Crashlytics, Google Cloud Run, Node.js
-
 <h2>Inside this app</h2>
 <li>AI-powered recipe generation based on user-provided ingredients and cooking method</li>
 <li>User-friendly interface for inputting ingredients and preferences</li>

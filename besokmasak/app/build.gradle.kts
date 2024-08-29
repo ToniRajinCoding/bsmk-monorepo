@@ -17,7 +17,7 @@ android {
         applicationId = "com.toraco.besokmasak"
         minSdk = 30
         targetSdk = 34
-        versionCode = 5
+        versionCode = 7
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         android.buildFeatures.buildConfig = true
@@ -120,5 +120,5 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
 
-
+    testImplementation("org.hamcrest:hamcrest:3.0")
 }

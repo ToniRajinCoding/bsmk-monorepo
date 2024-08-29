@@ -37,7 +37,6 @@ class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val cont
                         setTextColor(context.getColor(R.color.white))
                         show()
                     }
-
                 }
             }
         }
@@ -56,7 +55,7 @@ class FavoriteAdapter(private val viewmodel: FavoriteViewModel, private val cont
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val data = listData[position]
-        holder.bind(data,viewmodel, context)
+        holder.bind(data,viewmodel,context)
     }
 
 

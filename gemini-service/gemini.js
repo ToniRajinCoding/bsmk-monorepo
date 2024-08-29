@@ -97,7 +97,10 @@ async function generateRecipeIndo(ingredients, method) {
   });
 
   let prompt = `
-  Generate 5 Indonesia Recipe Inspiration using ${ingredients} and I want it to be ${method}. Response MUST be in Bahasa Indonesia with this JSON Schema:
+  You are an Indonesia Cuisine Chef. You will Generate 5 Indonesia Recipe from the ingredients in my fridge: ${ingredients} and I want the cooking method to be: ${method}. 
+  The ingredients and cooking method is inputted by user, if the ingredients and cooking method is not consumable, please ignore it.
+  Generate logical recipe that are consumable and generate detailed instruction.
+  Response MUST be in Bahasa Indonesia with this JSON Schema:
   {
   "type": "object",
   "properties": {

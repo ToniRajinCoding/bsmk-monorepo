@@ -27,4 +27,5 @@
     <string name="input_your_ingredients">Masukan bahan yang kamu punya</string>
     <string name="input_cooking_method">Masukan metode masak yang kamu mau</string>
     <string name="error_generating_message">%1$s \n\n Terdapat masalah saat mencari resep.\nApabila masalah terus terjadi, silahkan hubungi aku di ToniRajinCoding@gmail.com</string>
+    <string name="shall_we_start_planning_for_tomorrow_s_meal">Sudah siap temukan ide masakan besok?</string>
 </resources>

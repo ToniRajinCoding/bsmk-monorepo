@@ -18,19 +18,19 @@
 
     <TextView
         android:id="@+id/tvFavTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ws_regular"
         android:gravity="start"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="placeholder"
-        />
+        tools:text="placeholder" />
 
     <com.varunest.sparkbutton.SparkButton
         android:id="@+id/favBtn"

@@ -28,7 +28,6 @@ class RecipeRepository @Inject constructor(
     private val appExecutors: AppExecutors
 ) : IRecipeRepository {
 
-    //already injected
 //    companion object {
 //        @Volatile
 //        private var instance: RecipeRepository? = null

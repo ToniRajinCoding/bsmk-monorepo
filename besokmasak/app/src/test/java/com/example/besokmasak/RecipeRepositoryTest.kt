@@ -1,32 +1,35 @@
 package com.example.besokmasak
 
-import android.util.Log
-import androidx.lifecycle.asLiveData
 import com.example.besokmasak.core.data.source.RecipeRepository
+import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.core.data.source.local.LocalDataSource
+import com.example.besokmasak.core.data.source.local.entity.IngredientEntity
 import com.example.besokmasak.core.data.source.local.entity.RecipeEntity
 import com.example.besokmasak.core.data.source.remote.RemoteDataSource
+import com.example.besokmasak.core.data.source.remote.network.ApiResponse
+import com.example.besokmasak.core.data.source.remote.request.RecipeRequest
+import com.example.besokmasak.core.data.source.remote.response.Ingredients
+import com.example.besokmasak.core.data.source.remote.response.Recipe
+import com.example.besokmasak.core.data.source.remote.response.RecipeResponse
 import com.example.besokmasak.core.domain.model.Recipes
+import com.example.besokmasak.core.domain.model.RecipesIngredients
 import com.example.besokmasak.utils.AppExecutors
-import com.example.besokmasak.utils.DataMapper
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.mock
 
 class RecipeRepositoryTest {
 
@@ -46,11 +49,17 @@ class RecipeRepositoryTest {
 
     private lateinit var mockListRecipes: List<RecipeEntity>
 
+    private lateinit var mockRequest : RecipeRequest
+
+    private lateinit var mockRecipe : RecipeResponse
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        mockListRecipes = listOf(RecipeEntity("aa", listOf("dd", "ee"), listOf("bb,cc"), false))
+        mockListRecipes = listOf(RecipeEntity("aa", listOf(IngredientEntity("aa", "bb")), listOf("bb,cc"), false))
         repository = RecipeRepository(remoteDataSource, localDataSource, appExecutors)
+        mockRecipe = RecipeResponse(listOf(Recipe("aa",listOf(Ingredients("aa", "bb")), listOf("bb,cc"))))
+        mockRequest = RecipeRequest("aa", "bb", "cc")
     }
 
 
@@ -65,6 +74,42 @@ class RecipeRepositoryTest {
 //            }
 //        }
 //    }
+
+    @Test
+    fun test_success_search_query() = runTest {
+
+        Mockito.`when`(remoteDataSource.searchQuery(mockRequest)).thenReturn(flowOf(ApiResponse.Success(mockRecipe.recipes)))
+        //Flow<Resource<List<Recipes>>>
+        val expectedData = flowOf(listOf(Recipes("aa",listOf(RecipesIngredients("aa", "bb")), listOf("bb,cc"))))
+        launch {
+            repository.searchRecipe(mockRequest).collectLatest { result ->
+                assertThat(result, instanceOf(Resource.Success::class.java))
+                assertThat((result as Resource.Success).data, equalTo(expectedData.first()))
+            }
+        }
+    }
+
+    @Test
+    fun test_empty_search_query() = runTest {
+
+        Mockito.`when`(remoteDataSource.searchQuery(mockRequest)).thenReturn(flowOf(ApiResponse.Empty))
+
+        repository.searchRecipe(mockRequest).collectLatest { result ->
+            assertThat(result, instanceOf(Resource.Loading::class.java))
+        }
+
+    }
+
+    @Test
+    fun test_error_search_query() = runTest {
+
+        Mockito.`when`(remoteDataSource.searchQuery(mockRequest)).thenReturn(flowOf(ApiResponse.Error("Error!")))
+
+        repository.searchRecipe(mockRequest).collectLatest { result ->
+            assertThat(result, instanceOf(Resource.Error::class.java))
+            assertThat((result as Resource.Error).message, equalTo("Error!"))
+        }
+    }
 
     @Test
     fun getAllRecipes_returnDummyList() {
@@ -85,6 +130,37 @@ class RecipeRepositoryTest {
             }
         }
     }
+
+
+    @Test
+    fun getAllRecipes_returnEmptyList() = runTest {
+
+        val mockEmptyRecipeEntity : List<RecipeEntity> = emptyList()
+        val expectedData : List<Any> = emptyList()
+
+        //Flow<List<RecipeEntity>>
+        Mockito.`when`(localDataSource.getFavoritedRecipe()).thenReturn(flowOf(mockEmptyRecipeEntity))
+
+        repository.getAllRecipe().collectLatest { result ->
+            assertThat(result, equalTo(expectedData) )
+        }
+
+    }
+
+    @Test
+    fun updateFavoritedRecipe_favorited() = runTest {
+
+
+
+    }
+
+    @Test
+    fun updateFavoritedRecipe_unFavorited() = runTest {
+
+    }
+
+
+
 
 
 

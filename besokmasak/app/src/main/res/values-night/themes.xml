@@ -41,7 +41,7 @@
         <item name="colorPrimary">@color/dark_brown</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/darker_teal</item>
+        <item name="android:statusBarColor">@color/black</item>
         <item name="android:fontFamily">@font/ws_regular</item>
         <!-- Customize your theme here. -->
     </style>

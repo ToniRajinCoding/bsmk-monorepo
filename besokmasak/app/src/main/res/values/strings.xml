@@ -27,4 +27,5 @@
     <string name="input_your_ingredients">Input your ingredients</string>
     <string name="input_cooking_method">Input cooking method</string>
     <string name="error_generating_message">%1$s \n\nThere\'s a problem generating recipe, please try again.\nIf issue persist, please contact tonirajincoding@gmail.com</string>
+    <string name="shall_we_start_planning_for_tomorrow_s_meal">Shall we start planning for tomorrow\'s meal?</string>
 </resources>

@@ -22,7 +22,7 @@
 
     <activity
         android:id="@+id/navResult"
-        android:name="com.example.besokmasak.searchresult.RecipeResultActivity"
+        android:name="com.example.besokmasak.recipedetail.RecipeResultActivity"
         android:label="menu_result"
         tools:layout="@layout/activity_recipe_result"/>
 

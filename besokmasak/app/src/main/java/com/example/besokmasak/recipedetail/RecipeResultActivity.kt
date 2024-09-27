@@ -11,7 +11,7 @@ import com.example.besokmasak.utils.LanguagePref
 import com.example.besokmasak.R
 import com.example.besokmasak.core.data.source.Resource
 import com.example.besokmasak.databinding.ActivityRecipeResultBinding
-import com.example.besokmasak.utils.AdmobManager
+import com.example.besokmasak.core.di.AdmobManager
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager

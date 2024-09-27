@@ -14,5 +14,4 @@ class RecipeInteractor @Inject constructor(private val recipeRepository: IRecipe
     override suspend fun searchRecipe(recipeRequest: RecipeRequest)=recipeRepository.searchRecipe(recipeRequest)
     override fun getAllRecipe() = recipeRepository.getAllRecipe()
     override suspend fun updateFavoritedRecipe(recipe: Recipes, state: Boolean) = recipeRepository.updateFavoritedRecipe(recipe,state)
-
 }

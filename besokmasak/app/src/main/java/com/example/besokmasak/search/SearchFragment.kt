@@ -10,15 +10,18 @@ import android.view.ViewGroup
 import com.example.besokmasak.R
 import com.example.besokmasak.databinding.FragmentSearchBinding
 import com.example.besokmasak.recipedetail.RecipeResultActivity
-import com.example.besokmasak.utils.AdmobManager
+import com.example.besokmasak.core.di.AdmobManager
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private val admobManager by lazy { AdmobManager(requireContext()) }
+    @Inject
+    lateinit var admobManager : AdmobManager
+
     private lateinit var binding: FragmentSearchBinding
 //    private var mInterstitialAd: InterstitialAd? = null
 //    private val adRequest by lazy { AdRequest.Builder().build() }

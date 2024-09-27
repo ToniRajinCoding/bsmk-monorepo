@@ -16,54 +16,41 @@ import java.util.Locale
 
 class LanguageActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityLanguageBinding
+    private lateinit var binding: ActivityLanguageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lifecycleScope.launch(Dispatchers.Default){
+        val userLanguage = LanguagePref.getUserLanguage(this@LanguageActivity)
 
-            val userLanguage = LanguagePref.getUserLanguage(this@LanguageActivity)
-
-            withContext(Dispatchers.Main){
-                if(userLanguage.isNullOrEmpty()){
-                    setupLanguageButton()
-                }else{
-                    moveToSearch()
-                }
-            }
+        if (userLanguage.isNullOrEmpty()) {
+            setupLanguageButton()
+        } else {
+            moveToSearch()
         }
-
     }
 
-    private fun setupLanguageButton(){
+    private fun setupLanguageButton() {
         binding.btnEn.setOnClickListener { selectLanguage("en") }
         binding.btnId.setOnClickListener { selectLanguage("in") }
     }
 
-    private fun selectLanguage(language: String){
-        lifecycleScope.launch(Dispatchers.Default){
-            LanguagePref.setUserLanguage(this@LanguageActivity,language)
-            withContext(Dispatchers.Main){
-                updateResource(language)
-            }
-        }
+    private fun selectLanguage(language: String) {
+        LanguagePref.setUserLanguage(this@LanguageActivity, language)
+        updateResource(language)
     }
 
-
-    private fun updateResource(lanCode:String){
+    private fun updateResource(lanCode: String) {
         val localeList = LocaleListCompat.create(Locale(lanCode))
         AppCompatDelegate.setApplicationLocales(localeList)
-        moveToSearch()
     }
 
-    private fun moveToSearch(){
-        val intent = Intent(this, SearchActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+    private fun moveToSearch() {
+        val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
         finish()
     }
+
 }

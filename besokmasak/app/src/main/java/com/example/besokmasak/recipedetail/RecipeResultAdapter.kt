@@ -25,7 +25,6 @@ class RecipeResultAdapter(
         private val binding = RecipeDetailBinding.bind(itemView)
         fun bind(data: Recipes, viewmodel: RecipeResultViewModel) {
             with(binding) {
-                Log.d("isi dari recipes, recipe name: ", data.recipe_name)
                 val instructionAdapter = InstructionAdapter(data.instructions)
                 val ingredientAdapter = IngredientAdapter(data.ingredients)
                 tvRecipeName.text = data.recipe_name
@@ -33,7 +32,9 @@ class RecipeResultAdapter(
                 rvInstructions.layoutManager = LinearLayoutManager(itemView.context)
                 rvIngredients.adapter = ingredientAdapter
                 rvIngredients.layoutManager = LinearLayoutManager(itemView.context)
+
                 var counter = 0
+                
                 favBtn.setOnClickListener {
                     val isFavorited = counter % 2 == 0
                     val message = if (isFavorited) R.string.added_fav else R.string.removed_fav
